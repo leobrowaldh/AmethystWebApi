@@ -7,6 +7,7 @@ using Models.DTO;
 using DbModels;
 using DbContext;
 using Models;
+using Seido.Utilities.SeedGenerator;
 
 namespace DbRepos;
 
@@ -40,16 +41,10 @@ public class AdminDbRepos
         //First of all make sure the database is cleared from all seeded data
         await RemoveSeedAsync(true);
 
-        for (int i = 0; i < nrOfItems; i++)
-        {
-            int randomNumber = Random.Shared.Next(0, 4);
-            var attraction = new AttractionModelDbM()
-            {
-                Name = $"Attraction {i}",
-                Category = (AttractionCategory)randomNumber, 
-            };
-            _dbContext.AttractionModels.Add(attraction);
-        }
+        var rnd = new csSeedGenerator();
+
+        var attractions = rnd.ItemsToList<AttractionModelDbM>(nrOfItems);
+        _dbContext.Attractions.AddRange(attractions);
         await _dbContext.SaveChangesAsync();
         return await InfoAsync();
     }

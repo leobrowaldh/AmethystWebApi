@@ -24,14 +24,14 @@ public class AttractionDbRepos
     public async Task<List<IAttractionModel>> ReadAsync()
     {
         //here we specify the list type between <> :
-        var at = await _dbContext.AttractionModels.OrderBy(am => am.Name).ToListAsync<IAttractionModel>();
+        var at = await _dbContext.Attractions.OrderBy(am => am.Name).ToListAsync<IAttractionModel>();
         return at;
     }
 
     public async Task<IAttractionModel> ReadItemAsync(Guid id)
     {
         //No need for firstordefault, since we catch the errors in the controller.
-        var at = await _dbContext.AttractionModels.FirstAsync(a => a.Id == id);
+        var at = await _dbContext.Attractions.FirstAsync(a => a.Id == id);
         return at;
     }
 
