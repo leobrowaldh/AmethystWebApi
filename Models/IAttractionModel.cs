@@ -1,6 +1,8 @@
 namespace Models;
 
-public enum AttractionCategory { Nature, Historical, Party, Museeum}
+public enum AttractionCategory { Nature, Historical, Party, Museeu,Adventure,Cultural,Entertainment,Thrill}
+public enum AttractionName {Skyview,Suncrest,Driftwood,Starfall,Mistvale,Glowcove,Peakpoint,Tidepool}
+
 
 public interface IAttractionModel
 {
