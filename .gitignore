@@ -3,6 +3,10 @@
 ##
 ## Get latest from `dotnet new gitignore`
 
+# configuration.csproj
+Configuration\Configuration.csproj
+
+
 # dotenv files
 .env
 
