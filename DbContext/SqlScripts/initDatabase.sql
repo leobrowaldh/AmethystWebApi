@@ -1,4 +1,4 @@
-USE zooefc;
+USE attractionsefc;
 GO
 
 --01-create-schema.sql
@@ -13,7 +13,7 @@ GO
 --02-create-gstusr-view.sql
 --create a view that gives overview of the database content
 CREATE OR ALTER VIEW gstusr.vwInfoDb AS
-    SELECT COUNT(*) as NrGroups FROM supusr.AttractionModels;
+    SELECT COUNT(*) as NrGroups FROM supusr.Attractions;
 GO
 
 
@@ -26,7 +26,7 @@ CREATE OR ALTER PROC supusr.spDeleteAll
     SET NOCOUNT ON;
 
     -- will delete here
-    DELETE FROM supusr.AttractionModels;
+    DELETE FROM supusr.Attractions;
     -- return new data status
     SELECT * FROM gstusr.vwInfoDb;
 
@@ -51,15 +51,15 @@ IF SUSER_ID (N'supusr') IS NOT NULL
 DROP LOGIN supusr;
 
 CREATE LOGIN gstusr WITH PASSWORD=N'pa$$Word1', 
-    DEFAULT_DATABASE=zooefc, DEFAULT_LANGUAGE=us_english, 
+    DEFAULT_DATABASE=attractionsefc, DEFAULT_LANGUAGE=us_english, 
     CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF;
 
 CREATE LOGIN usr WITH PASSWORD=N'pa$$Word1', 
-DEFAULT_DATABASE=zooefc, DEFAULT_LANGUAGE=us_english, 
+DEFAULT_DATABASE=attractionsefc, DEFAULT_LANGUAGE=us_english, 
 CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF;
 
 CREATE LOGIN supusr WITH PASSWORD=N'pa$$Word1', 
-DEFAULT_DATABASE=zooefc, DEFAULT_LANGUAGE=us_english, 
+DEFAULT_DATABASE=attractionsefc, DEFAULT_LANGUAGE=us_english, 
 CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF;
 
 
@@ -74,24 +74,24 @@ CREATE USER supusrUser FROM LOGIN supusr;
 
 --05-create-roles-credentials.sql
 --create roles
-CREATE ROLE zooefcGstUsr;
-CREATE ROLE zooefcUsr;
-CREATE ROLE zooefcSupUsr;
+CREATE ROLE efcGstUsr;
+CREATE ROLE efcUsr;
+CREATE ROLE efcSupUsr;
 
 --assign securables creadentials to the roles
-GRANT SELECT, EXECUTE ON SCHEMA::gstusr to zooefcGstUsr;
-GRANT SELECT ON SCHEMA::supusr to zooefcUsr;
-GRANT SELECT, UPDATE, INSERT, DELETE, EXECUTE ON SCHEMA::supusr to zooefcSupUsr;
+GRANT SELECT, EXECUTE ON SCHEMA::gstusr to efcGstUsr;
+GRANT SELECT ON SCHEMA::supusr to efcUsr;
+GRANT SELECT, UPDATE, INSERT, DELETE, EXECUTE ON SCHEMA::supusr to efcSupUsr;
 
 --finally, add the users to the roles
-ALTER ROLE zooefcGstUsr ADD MEMBER gstusrUser;
+ALTER ROLE efcGstUsr ADD MEMBER gstusrUser;
 
-ALTER ROLE zooefcGstUsr ADD MEMBER usrUser;
-ALTER ROLE zooefcUsr ADD MEMBER usrUser;
+ALTER ROLE efcGstUsr ADD MEMBER usrUser;
+ALTER ROLE efcUsr ADD MEMBER usrUser;
 
-ALTER ROLE zooefcGstUsr ADD MEMBER supusrUser;
-ALTER ROLE zooefcUsr ADD MEMBER supusrUser;
-ALTER ROLE zooefcSupUsr ADD MEMBER supusrUser;
+ALTER ROLE efcGstUsr ADD MEMBER supusrUser;
+ALTER ROLE efcUsr ADD MEMBER supusrUser;
+ALTER ROLE efcSupUsr ADD MEMBER supusrUser;
 GO
 
 
