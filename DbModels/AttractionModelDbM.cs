@@ -8,7 +8,7 @@ using Seido.Utilities.SeedGenerator;
 
 namespace DbModels;
 
-[Table("AttractionModels", Schema = "supusr")]
+[Table("Attractions", Schema = "supusr")]
 public class AttractionModelDbM : AttractionModel, ISeed<AttractionModelDbM>
 {
     [Key]

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DbContext.Migrations.SqlServerDbContext
 {
     [DbContext(typeof(MainDbContext.SqlServerDbContext))]
-    [Migration("20250114135406_miInitial")]
+    [Migration("20250121125344_miInitial")]
     partial class miInitial
     {
         /// <inheritdoc />
@@ -38,6 +38,9 @@ namespace DbContext.Migrations.SqlServerDbContext
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(200)");
+
+                    b.Property<bool>("Seeded")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

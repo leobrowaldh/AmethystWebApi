@@ -36,6 +36,9 @@ namespace DbContext.Migrations.SqlServerDbContext
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<bool>("Seeded")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.ToTable("AttractionModels", "supusr");

@@ -21,7 +21,8 @@ namespace DbContext.Migrations.SqlServerDbContext
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(200)", maxLength: 50, nullable: false),
-                    Category = table.Column<int>(type: "int", nullable: false)
+                    Category = table.Column<int>(type: "int", nullable: false),
+                    Seeded = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
