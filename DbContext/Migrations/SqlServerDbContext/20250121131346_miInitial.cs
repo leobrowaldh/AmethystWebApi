@@ -15,7 +15,7 @@ namespace DbContext.Migrations.SqlServerDbContext
                 name: "supusr");
 
             migrationBuilder.CreateTable(
-                name: "AttractionModels",
+                name: "Attractions",
                 schema: "supusr",
                 columns: table => new
                 {
@@ -26,7 +26,7 @@ namespace DbContext.Migrations.SqlServerDbContext
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AttractionModels", x => x.Id);
+                    table.PrimaryKey("PK_Attractions", x => x.Id);
                 });
         }
 
@@ -34,7 +34,7 @@ namespace DbContext.Migrations.SqlServerDbContext
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AttractionModels",
+                name: "Attractions",
                 schema: "supusr");
         }
     }

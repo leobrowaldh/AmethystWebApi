@@ -41,7 +41,7 @@ namespace DbContext.Migrations.SqlServerDbContext
 
                     b.HasKey("Id");
 
-                    b.ToTable("AttractionModels", "supusr");
+                    b.ToTable("Attractions", "supusr");
                 });
 
             modelBuilder.Entity("Models.DTO.GstUsrInfoDbDto", b =>
