@@ -64,6 +64,34 @@ namespace AppWebApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(200, Type = typeof(ResponseItemDto<AttractionModel>))]
+        [ProducesResponseType(400, Type = typeof(string))]
+        public async Task<IActionResult> DeleteItem(string id)
+        {
+            try
+            {
+                var idArg = Guid.Parse(id);
+
+                _logger.LogInformation($"{nameof(DeleteItem)}: {nameof(idArg)}: {idArg}");
+                
+                var item = await _attractionService.DeleteAttractionAsync(idArg);
+                if (item?.Item == null) throw new ArgumentException ($"Item with id {id} does not exist");
+        
+                _logger.LogInformation($"item {idArg} deleted");
+                return Ok(item);                
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{nameof(DeleteItem)}: {ex.Message}");
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
+
+
+    
 }
 

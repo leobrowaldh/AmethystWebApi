@@ -78,6 +78,32 @@ public class AttractionDbRepos
             PageNr = pageNumber,
             PageSize = pageSize
         };
+
+
+        
+    }
+
+     public async Task<ResponseItemDto<IAttractionModel>> DeleteAttractionAsync(Guid id)
+    {
+        //Find the instance with matching id
+        var query1 = _dbContext.Attractions
+            .Where(i => i.Id == id);
+        var item = await query1.FirstOrDefaultAsync<AttractionModelDbM>();
+
+        //If the item does not exists
+        if (item == null) throw new ArgumentException($"Item {id} is not existing");
+
+        //delete in the database model
+        _dbContext.Attractions.Remove(item);
+
+        //write to database in a UoW
+        await _dbContext.SaveChangesAsync();
+
+        return new ResponseItemDto<IAttractionModel>()
+        {
+            DbConnectionKeyUsed = _dbContext.dbConnection,
+            Item = item
+        };
     }
 
 }
