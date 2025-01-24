@@ -21,6 +21,7 @@ namespace DbContext.Migrations.SqlServerDbContext
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(200)", maxLength: 50, nullable: false),
+                    strCategory = table.Column<string>(type: "nvarchar(200)", nullable: true),
                     Category = table.Column<int>(type: "int", nullable: false),
                     Seeded = table.Column<bool>(type: "bit", nullable: false)
                 },

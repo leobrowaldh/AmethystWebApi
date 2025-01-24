@@ -39,6 +39,9 @@ namespace DbContext.Migrations.SqlServerDbContext
                     b.Property<bool>("Seeded")
                         .HasColumnType("bit");
 
+                    b.Property<string>("strCategory")
+                        .HasColumnType("nvarchar(200)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Attractions", "supusr");
