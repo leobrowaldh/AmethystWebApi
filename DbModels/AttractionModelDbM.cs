@@ -24,4 +24,18 @@ public class AttractionModelDbM : AttractionModel, ISeed<AttractionModelDbM>
         this.Seeded = true;
         return this;
     }
+
+
+    
+    public AttractionModelDbM UpdateFromDTO(AttractionCuDto org)
+    {
+        if (org == null) return null;
+
+       
+        Category = org.Category;
+        Name = org.Name;
+
+      
+        return this;
+    }
 }
