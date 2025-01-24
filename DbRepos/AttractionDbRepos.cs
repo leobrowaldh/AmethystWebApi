@@ -101,4 +101,30 @@ public class AttractionDbRepos
         };
     }
 
+      public async Task<ResponseItemDto<IAttractionModel>> UpdateAttractionAsync(AttractionCuDto itemDto)
+    {
+        //Find the instance with matching id and read the navigation properties.
+        var query1 = _dbContext.Attractions
+            .Where(i => i.Id == itemDto.Id);
+        var item = await query1
+            .FirstOrDefaultAsync<AttractionModelDbM>();
+
+        //If the item does not exists
+        if (item == null) throw new ArgumentException($"Item {itemDto.Id} is not existing");
+
+        //transfer any changes from DTO to database objects
+        //Update individual properties
+        item.UpdateFromDTO(itemDto);
+
+        //write to database model
+        _dbContext.Attractions.Update(item);
+
+        //write to database in a UoW
+        await _dbContext.SaveChangesAsync();
+
+        //return the updated item in non-flat mode
+        return await ReadItemAsync(item.Id);    
+    }
+
+
 }

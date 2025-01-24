@@ -89,6 +89,33 @@ namespace AppWebApi.Controllers
             }
         }
 
+
+
+          [HttpPut("{id}")]
+        [ProducesResponseType(200, Type = typeof(ResponseItemDto<IAttractionModel>))]
+        [ProducesResponseType(400, Type = typeof(string))]
+        public async Task<IActionResult> UpdateItem(string id, [FromBody] AttractionCuDto item)
+        {
+            try
+            {
+                var idArg = Guid.Parse(id);
+
+                _logger.LogInformation($"{nameof(UpdateItem)}: {nameof(idArg)}: {idArg}");
+                
+                if (item.Id != idArg) throw new ArgumentException("Id mismatch");
+
+                var _item = await _attractionService.UpdateAttractionAsync(item);
+                _logger.LogInformation($"item {idArg} updated");
+               
+                return Ok(_item);             
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{nameof(UpdateItem)}: {ex.Message}");
+                return BadRequest($"Could not update. Error {ex.Message}");
+            }
+        }
+
     }
 
 
