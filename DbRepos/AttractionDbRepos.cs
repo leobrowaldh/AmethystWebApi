@@ -41,11 +41,6 @@ public class AttractionDbRepos
         filter ??= "";
         filter = filter.ToLower();
 
-        // Try to parse the filter into an enum value
-        AttractionCategory? categoryFilter = Enum.GetValues(typeof(AttractionCategory))
-            .Cast<AttractionCategory>()
-            .FirstOrDefault(e => e.ToString().ToLower() == filter);
-
         IQueryable<AttractionModelDbM> query;
 
         query = _dbContext.Attractions.AsNoTracking();
@@ -58,7 +53,7 @@ public class AttractionDbRepos
 
             //Adding filter functionality
             .Where(a => (a.Seeded == seeded) &&
-                        (categoryFilter != null && a.Category == categoryFilter ||
+                        (a.strCategory.ToLower().Contains(filter) ||
                          a.Name.ToLower().Contains(filter) ))
             .CountAsync(),
 
@@ -67,7 +62,7 @@ public class AttractionDbRepos
             //Adding filter functionality
             .Where(a => (a.Seeded == seeded) &&
                         (a.Name.ToLower().Contains(filter) ||
-                         categoryFilter != null && a.Category == categoryFilter))
+                         a.strCategory.ToLower().Contains(filter)))
 
             //Adding paging
             .Skip(pageNumber * pageSize)

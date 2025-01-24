@@ -17,11 +17,20 @@ public class AttractionModelDbM : AttractionModel, ISeed<AttractionModelDbM>
     [StringLength(50)]
     public override string Name { get; set; }
 
+    #region adding more readability to an enum type in the database
+    public virtual string strCategory
+    {
+        get => Category.ToString();
+        set { }  //set is needed by EFC to include in the database, so I make it to do nothing
+    }
+    #endregion
+
     public AttractionModelDbM Seed(csSeedGenerator rnd)
     {
-        this.Name = rnd.FirstName;
+        this.Name = rnd.FromList(SeedingStrings.AttractionFirstName) + " " + rnd.FromList(SeedingStrings.AttractionLastName);
         this.Category = rnd.FromEnum<AttractionCategory>();
         this.Seeded = true;
         return this;
     }
+
 }
