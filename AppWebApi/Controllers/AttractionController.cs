@@ -25,13 +25,17 @@ namespace AppWebApi.Controllers
 
         [HttpGet()]
         [ProducesResponseType(200, Type = typeof(List<IAttractionModel>))]
-        public async Task<IActionResult> Read()
+        [ProducesResponseType(400, Type = typeof(string))]
+        public async Task<IActionResult> Read(bool seeded = true, string filter = null,
+            int pageNr = 0, int pageSize = 10)
         {
             try
             {
-                var attractions = await _attractionService.ReadAsync();
 
-                _logger.LogInformation($"{nameof(Read)}");
+                _logger.LogInformation($"{nameof(Read)}: {nameof(seeded)}: {seeded}, " +
+                    $"{nameof(pageNr)}: {pageNr}, {nameof(pageSize)}: {pageSize}");
+                
+                var attractions = await _attractionService.ReadAsync(seeded, filter?.Trim().ToLower(), pageNr, pageSize);
                 return Ok(attractions);
             }
             catch (Exception ex)
@@ -43,14 +47,15 @@ namespace AppWebApi.Controllers
 
         [HttpGet()]
         [ProducesResponseType(200, Type = typeof(IAttractionModel))]
-        public async Task<IActionResult> ReadItem(string id)
+        public async Task<IActionResult> ReadItem(string id = null)
         {
             try
             {
                 Guid guidId = Guid.Parse(id);
-                var attraction = await _attractionService.ReadItemAsync(guidId);
-
                 _logger.LogInformation($"{nameof(Read)}");
+
+                var attraction = await _attractionService.ReadItemAsync(guidId);
+                if (attraction?.Item == null) throw new ArgumentException($"Item with id {id} does not exist");
                 return Ok(attraction);
             }
             catch (Exception ex)

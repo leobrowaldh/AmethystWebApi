@@ -21,18 +21,63 @@ public class AttractionDbRepos
         _dbContext = context;
     }
 
-    public async Task<List<IAttractionModel>> ReadAsync()
+    public async Task<ResponseItemDto<IAttractionModel>> ReadItemAsync(Guid id)
     {
-        //here we specify the list type between <> :
-        var at = await _dbContext.Attractions.OrderBy(am => am.Name).ToListAsync<IAttractionModel>();
-        return at;
+        IQueryable<AttractionModelDbM> query;
+
+        query = _dbContext.Attractions.AsNoTracking()
+            .Where(a => a.Id == id);
+
+        var resp = await query.FirstOrDefaultAsync<IAttractionModel>();
+        return new ResponseItemDto<IAttractionModel>()
+        {
+            DbConnectionKeyUsed = _dbContext.dbConnection,
+            Item = resp
+        };
     }
 
-    public async Task<IAttractionModel> ReadItemAsync(Guid id)
+    public async Task<ResponsePageDto<IAttractionModel>> ReadItemsAsync(bool seeded, string filter, int pageNumber, int pageSize)
     {
-        //No need for firstordefault, since we catch the errors in the controller.
-        var at = await _dbContext.Attractions.FirstAsync(a => a.Id == id);
-        return at;
+        filter ??= "";
+        filter = filter.ToLower();
+
+        // Try to parse the filter into an enum value
+        AttractionCategory? categoryFilter = Enum.GetValues(typeof(AttractionCategory))
+            .Cast<AttractionCategory>()
+            .FirstOrDefault(e => e.ToString().ToLower() == filter);
+
+        IQueryable<AttractionModelDbM> query;
+
+        query = _dbContext.Attractions.AsNoTracking();
+        
+
+        return new ResponsePageDto<IAttractionModel>()
+        {
+            DbConnectionKeyUsed = _dbContext.dbConnection,
+            DbItemsCount = await query
+
+            //Adding filter functionality
+            .Where(a => (a.Seeded == seeded) &&
+                        (categoryFilter != null && a.Category == categoryFilter ||
+                         a.Name.ToLower().Contains(filter) ))
+            .CountAsync(),
+
+            PageItems = await query
+
+            //Adding filter functionality
+            .Where(a => (a.Seeded == seeded) &&
+                        (a.Name.ToLower().Contains(filter) ||
+                         categoryFilter != null && a.Category == categoryFilter))
+
+            //Adding paging
+            .Skip(pageNumber * pageSize)
+            .Take(pageSize)
+
+            .ToListAsync<IAttractionModel>(),
+
+            PageNr = pageNumber,
+            PageSize = pageSize
+        };
     }
 
 }
