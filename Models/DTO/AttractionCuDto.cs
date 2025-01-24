@@ -14,7 +14,7 @@ public class AttractionCuDto
 {
     public virtual Guid? Id { get; set; }
 
-    public string City { get; set; }
+   
     public AttractionCategory Category { get; set; }
     public string Name { get; set; }
 
