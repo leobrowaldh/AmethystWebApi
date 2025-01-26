@@ -6,10 +6,8 @@ public enum AttractionName {Skyview,Suncrest,Driftwood,Starfall,Mistvale,Glowcov
 
 public interface IAttractionModel
 {
-    public Guid AttractionId { get; set;}
+    public Guid Id { get; set;}
     public string Name { get; set;}
     public AttractionCategory Category { get; set;}
     public bool Seeded { get; set; }
-
-    public List<IComment> Comments { get; set; }
 }

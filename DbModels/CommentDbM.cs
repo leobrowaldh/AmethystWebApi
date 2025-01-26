@@ -40,23 +40,23 @@ public class CommentDbM : Comment, ISeed<CommentDbM>
         return this;
     }
 
-    public CommentDbM UpdateFromDTO(CommentCuDto org)
-    {
-        if (org == null) return null;
+    // public CommentDbM UpdateFromDTO(CommentCuDto org)
+    // {
+    //     if (org == null) return null;
 
-        Type = org.Kind;
-        Rating = org.Mood;
-        CommentAge = org.Age;
-        CommentName = org.Name;
-        CommentText = org.Description;
+    //     Type = org.Kind;
+    //     Rating = org.Mood;
+    //     CommentAge = org.Age;
+    //     CommentName = org.Name;
+    //     CommentText = org.Description;
 
-        return this;
-    }
+    //     return this;
+    // }
 
     public CommentDbM() { }
-    public CommentDbM(CommentCuDto org)
-    {
-        CommentId = Guid.NewGuid();
-        UpdateFromDTO(org);
-    }
+    // public CommentDbM(CommentCuDto org)
+    // {
+    //     CommentId = Guid.NewGuid();
+    //     UpdateFromDTO(org);
+    // }
 }
