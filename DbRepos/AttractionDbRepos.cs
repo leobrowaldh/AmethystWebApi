@@ -78,7 +78,7 @@ public class AttractionDbRepos
         
     }
 
-     public async Task<ResponseItemDto<IAttractionModel>> DeleteAttractionAsync(Guid id)
+    public async Task<ResponseItemDto<IAttractionModel>> DeleteAttractionAsync(Guid id)
     {
         //Find the instance with matching id
         var query1 = _dbContext.Attractions
@@ -101,7 +101,7 @@ public class AttractionDbRepos
         };
     }
 
-      public async Task<ResponseItemDto<IAttractionModel>> UpdateAttractionAsync(AttractionCuDto itemDto)
+    public async Task<ResponseItemDto<IAttractionModel>> UpdateAttractionAsync(AttractionCuDto itemDto)
     {
         //Find the instance with matching id and read the navigation properties.
         var query1 = _dbContext.Attractions
@@ -124,6 +124,25 @@ public class AttractionDbRepos
 
         //return the updated item in non-flat mode
         return await ReadItemAsync(item.Id);    
+    }
+
+    public async Task<ResponseItemDto<IAttractionModel>> CreateItemAsync(AttractionCuDto itemDto)
+    {
+        if (itemDto.Id != null)
+            throw new ArgumentException($"{nameof(itemDto.Id)} must be null when creating a new object");
+
+        //transfer any changes from DTO to database objects
+        //Update individual properties Zoo
+        var item = new AttractionModelDbM(itemDto);
+
+        //write to database model
+        _dbContext.Attractions.Add(item);
+
+        //write to database in a UoW
+        await _dbContext.SaveChangesAsync();
+
+        //return the updated item in non-flat mode
+        return await ReadItemAsync(item.Id);
     }
 
 

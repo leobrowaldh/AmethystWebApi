@@ -47,4 +47,12 @@ public class AttractionModelDbM : AttractionModel, ISeed<AttractionModelDbM>
       
         return this;
     }
+
+    public AttractionModelDbM() { }
+
+    public AttractionModelDbM(AttractionCuDto org)
+    {
+        Id = Guid.NewGuid();
+        UpdateFromDTO(org);
+    }
 }
