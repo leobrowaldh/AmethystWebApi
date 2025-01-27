@@ -21,7 +21,7 @@ public class AttractionDbRepos
         _dbContext = context;
     }
 
-    public async Task<ResponseItemDto<IAttractionModel>> ReadItemAsync(Guid id)
+    public async Task<ResponseItemDto<IAttractionModel>> ReadItemAsync(Guid id, bool flat)
     {
         IQueryable<AttractionModelDbM> query;
 
@@ -36,7 +36,7 @@ public class AttractionDbRepos
         };
     }
 
-    public async Task<ResponsePageDto<IAttractionModel>> ReadItemsAsync(bool seeded, string filter, int pageNumber, int pageSize)
+    public async Task<ResponsePageDto<IAttractionModel>> ReadItemsAsync(bool seeded, bool flat, string filter, int pageNumber, int pageSize)
     {
         filter ??= "";
         filter = filter.ToLower();
