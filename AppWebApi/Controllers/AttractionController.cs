@@ -15,9 +15,9 @@ namespace AppWebApi.Controllers;
 public class AttractionController : Controller
 {
     readonly IAttractionService _attractionService;
-    readonly ILogger<GuestController> _logger;
+    readonly ILogger<AttractionController> _logger;
 
-    public AttractionController(IAttractionService attractionService, ILogger<GuestController> logger)
+    public AttractionController(IAttractionService attractionService, ILogger<AttractionController> logger)
     {
         _attractionService = attractionService;
         _logger = logger;
@@ -26,7 +26,7 @@ public class AttractionController : Controller
     [HttpGet()]
     [ProducesResponseType(200, Type = typeof(List<IAttractionModel>))]
     [ProducesResponseType(400, Type = typeof(string))]
-    public async Task<IActionResult> Read(bool seeded = true, string filter = null,
+    public async Task<IActionResult> Read(bool seeded = true, bool flat = true, string filter = null,
         int pageNr = 0, int pageSize = 10)
     {
         try
@@ -35,7 +35,7 @@ public class AttractionController : Controller
             _logger.LogInformation($"{nameof(Read)}: {nameof(seeded)}: {seeded}, " +
                 $"{nameof(pageNr)}: {pageNr}, {nameof(pageSize)}: {pageSize}");
             
-            var attractions = await _attractionService.ReadAsync(seeded, filter?.Trim().ToLower(), pageNr, pageSize);
+            var attractions = await _attractionService.ReadAsync(seeded, flat, filter?.Trim().ToLower(), pageNr, pageSize);
             return Ok(attractions);
         }
         catch (Exception ex)
@@ -47,14 +47,14 @@ public class AttractionController : Controller
 
     [HttpGet()]
     [ProducesResponseType(200, Type = typeof(IAttractionModel))]
-    public async Task<IActionResult> ReadItem(string id = null)
+    public async Task<IActionResult> ReadItem(string id = null, bool flat = false)
     {
         try
         {
             Guid guidId = Guid.Parse(id);
             _logger.LogInformation($"{nameof(Read)}");
 
-            var attraction = await _attractionService.ReadItemAsync(guidId);
+            var attraction = await _attractionService.ReadItemAsync(guidId, flat);
             if (attraction?.Item == null) throw new ArgumentException($"Item with id {id} does not exist");
             return Ok(attraction);
         }
