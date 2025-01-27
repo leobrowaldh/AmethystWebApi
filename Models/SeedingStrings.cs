@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DbModels;
+namespace Models;
 public static class SeedingStrings
 {
     public static readonly List<string> AttractionFirstName = new List<string>

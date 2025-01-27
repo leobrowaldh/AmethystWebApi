@@ -25,11 +25,9 @@ public class AttractionModelDbM : AttractionModel, ISeed<AttractionModelDbM>
     }
     #endregion
 
-    public AttractionModelDbM Seed(csSeedGenerator rnd)
+    public override AttractionModelDbM Seed (csSeedGenerator _seeder)
     {
-        this.Name = rnd.FromList(SeedingStrings.AttractionFirstName) + " " + rnd.FromList(SeedingStrings.AttractionLastName);
-        this.Category = rnd.FromEnum<AttractionCategory>();
-        this.Seeded = true;
+        base.Seed (_seeder);
         return this;
     }
 
