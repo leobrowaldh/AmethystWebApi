@@ -26,7 +26,7 @@ public class AttractionDbRepos
         IQueryable<AttractionModelDbM> query;
 
         query = _dbContext.Attractions.AsNoTracking()
-            .Where(a => a.Id == id);
+            .Where(a => a.AttractionId == id);
 
         var resp = await query.FirstOrDefaultAsync<IAttractionModel>();
         return new ResponseItemDto<IAttractionModel>()
@@ -82,7 +82,7 @@ public class AttractionDbRepos
     {
         //Find the instance with matching id
         var query1 = _dbContext.Attractions
-            .Where(i => i.Id == id);
+            .Where(i => i.AttractionId == id);
         var item = await query1.FirstOrDefaultAsync<AttractionModelDbM>();
 
         //If the item does not exists
@@ -105,12 +105,12 @@ public class AttractionDbRepos
     {
         //Find the instance with matching id and read the navigation properties.
         var query1 = _dbContext.Attractions
-            .Where(i => i.Id == itemDto.Id);
+            .Where(i => i.AttractionId == itemDto.AttractionId);
         var item = await query1
             .FirstOrDefaultAsync<AttractionModelDbM>();
 
         //If the item does not exists
-        if (item == null) throw new ArgumentException($"Item {itemDto.Id} is not existing");
+        if (item == null) throw new ArgumentException($"Item {itemDto.AttractionId} is not existing");
 
         //transfer any changes from DTO to database objects
         //Update individual properties
@@ -123,13 +123,13 @@ public class AttractionDbRepos
         await _dbContext.SaveChangesAsync();
 
         //return the updated item in non-flat mode
-        return await ReadItemAsync(item.Id);    
+        return await ReadItemAsync(item.AttractionId);    
     }
 
     public async Task<ResponseItemDto<IAttractionModel>> CreateItemAsync(AttractionCuDto itemDto)
     {
-        if (itemDto.Id != null)
-            throw new ArgumentException($"{nameof(itemDto.Id)} must be null when creating a new object");
+        if (itemDto.AttractionId != null)
+            throw new ArgumentException($"{nameof(itemDto.AttractionId)} must be null when creating a new object");
 
         //transfer any changes from DTO to database objects
         //Update individual properties Zoo
@@ -142,7 +142,7 @@ public class AttractionDbRepos
         await _dbContext.SaveChangesAsync();
 
         //return the updated item in non-flat mode
-        return await ReadItemAsync(item.Id);
+        return await ReadItemAsync(item.AttractionId);
     }
 
 

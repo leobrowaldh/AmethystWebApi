@@ -4,8 +4,10 @@ namespace Models;
 
 public class AttractionModel: IAttractionModel
 {
-    public virtual Guid Id { get; set; }
+    public virtual Guid AttractionId { get; set; }
     public virtual string Name {  get; set; }
     public AttractionCategory Category {  get; set; }
+    public IComment Comments { get; set; }
+
     public bool Seeded { get; set; }
 }

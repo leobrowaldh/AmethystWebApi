@@ -12,7 +12,7 @@ namespace Models.DTO;
 //These DTO are simplistic and used to Update and Create objects
 public class AttractionCuDto
 {
-    public virtual Guid? Id { get; set; }
+    public virtual Guid? AttractionId { get; set; }
 
    
     public AttractionCategory Category { get; set; }
@@ -21,7 +21,7 @@ public class AttractionCuDto
     public AttractionCuDto() { }
     public AttractionCuDto(IAttractionModel org)
     {
-        Id = org.Id;
+        AttractionId = org.AttractionId;
         Name = org.Name;
         Category = org.Category;
         

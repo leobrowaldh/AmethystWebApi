@@ -102,7 +102,7 @@ public class AttractionController : Controller
 
             _logger.LogInformation($"{nameof(UpdateItem)}: {nameof(idArg)}: {idArg}");
             
-            if (item.Id != idArg) throw new ArgumentException("Id mismatch");
+            if (item.AttractionId != idArg) throw new ArgumentException("Id mismatch");
 
             var _item = await _attractionService.UpdateAttractionAsync(item);
             _logger.LogInformation($"item {idArg} updated");
@@ -126,7 +126,7 @@ public class AttractionController : Controller
             _logger.LogInformation($"{nameof(CreateItem)}:");
 
             var _item = await _attractionService.CreateAttractionAsync(item);
-            _logger.LogInformation($"item {_item.Item.Id} created");
+            _logger.LogInformation($"item {_item.Item.AttractionId} created");
 
             return Ok(_item);
         }

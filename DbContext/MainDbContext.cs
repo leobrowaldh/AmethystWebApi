@@ -25,6 +25,7 @@ public class MainDbContext : Microsoft.EntityFrameworkCore.DbContext
 
     #region C# model of database tables
     public DbSet<AttractionModelDbM> Attractions { get; set; }
+    public DbSet<CommentDbM> Comments { get; set; }  
     #endregion
 
     #region model the Views
