@@ -5,7 +5,7 @@ public enum AttractionCategory { Nature, Historical, Party, Museeum, Adventure, 
 
 public interface IAttractionModel
 {
-    public Guid Id { get; set;}
+    public Guid AttractionId { get; set;}
     public string Name { get; set;}
     public  AttractionCategory Category { get; set;}
     public bool Seeded { get; set; }

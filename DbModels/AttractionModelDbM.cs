@@ -12,7 +12,7 @@ namespace DbModels;
 public class AttractionModelDbM : AttractionModel, ISeed<AttractionModelDbM>
 {
     [Key]
-    public override Guid Id { get; set; }
+    public override Guid AttractionId { get; set; }
     [Required]
     [StringLength(50)]
     public override string Name { get; set; }
