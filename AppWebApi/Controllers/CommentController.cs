@@ -24,7 +24,7 @@ public class CommentController : Controller
     }
 
     [HttpGet()]
-    [ProducesResponseType(200, Type = typeof(List<ICommentModel>))]
+    [ProducesResponseType(200, Type = typeof(List<IComment>))]
     [ProducesResponseType(400, Type = typeof(string))]
     public async Task<IActionResult> Read(bool seeded = true, bool flat = true, string filter = null,
         int pageNr = 0, int pageSize = 10)
@@ -47,14 +47,14 @@ public class CommentController : Controller
 
     [HttpGet()]
     [ProducesResponseType(200, Type = typeof(IAttractionModel))]
-    public async Task<IActionResult> ReadItem(string id = null, bool flat = "false")
+    public async Task<IActionResult> ReadItem(string id = null, bool flat = false)
     {
         try
         {
             Guid guidId = Guid.Parse(id);
             _logger.LogInformation($"{nameof(Read)}");
 
-            var attraction = await _commentService.ReadItemAsync(guidId, flat);
+            var attraction = await _commentService.ReadCommentAsync(guidId, flat);
             if (attraction?.Item == null) throw new ArgumentException($"Item with id {id} does not exist");
             return Ok(attraction);
         }
