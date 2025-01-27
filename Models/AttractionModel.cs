@@ -9,8 +9,8 @@ public class AttractionModel: IAttractionModel, ISeed<AttractionModel>
     public virtual string Name { get; set; }
     public virtual string Description { get; set; }
     public AttractionCategory Category {  get; set; }
-    public IComment Comments { get; set; }
-    public IAddress Address { get; set; }
+    public virtual List<IComment> Comments { get; set; }
+    public virtual IAddress Address { get; set; }
 
     public bool Seeded { get; set; }
 

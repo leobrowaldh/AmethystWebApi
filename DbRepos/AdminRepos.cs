@@ -44,6 +44,11 @@ public class AdminDbRepos
         var rnd = new csSeedGenerator();
 
         var attractions = rnd.ItemsToList<AttractionModelDbM>(nrOfItems);
+        foreach (var attraction in attractions)
+        {
+            attraction.AddressDbM = new AddressDbM().Seed(rnd);
+            attraction.CommentsDbM = rnd.ItemsToList<CommentDbM>(rnd.Next(0,4));
+        }
         _dbContext.Attractions.AddRange(attractions);
         await _dbContext.SaveChangesAsync();
         return await InfoAsync();

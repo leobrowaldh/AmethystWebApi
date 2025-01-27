@@ -7,13 +7,13 @@ namespace Models;
 public class Address:IAddress, ISeed<Address>
 {
     public virtual Guid AddressId { get; set; } = Guid.NewGuid();
-    public City City { get; set; }
-    public Country Country { get; set; }
+    public virtual City City { get; set; }
+    public virtual Country Country { get; set; }
 
-    public string StreetName { get; set; }
+    public virtual string StreetName { get; set; }
     public int ZipCode { get; set; }
 
-    public virtual IAttractionModel AttractionModels { get; set; }
+    public virtual List<IAttractionModel> AttractionModels { get; set; }
 
     public bool Seeded { get; set; } = false;
 
@@ -26,7 +26,7 @@ public class Address:IAddress, ISeed<Address>
         Country = seeder.FromEnum<Country>();
 
         StreetName = seeder.FullName;
-        ZipCode = seeder.Next(10000, 9999);
+        ZipCode = seeder.Next(00001, 9999);
 
         return this;
     }

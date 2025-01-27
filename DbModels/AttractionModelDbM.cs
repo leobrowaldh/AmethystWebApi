@@ -25,6 +25,15 @@ public class AttractionModelDbM : AttractionModel, ISeed<AttractionModelDbM>
     }
     #endregion
 
+    [NotMapped] //ignored by efc
+    public override List<IComment> Comments { get => CommentsDbM?.ToList<IComment>(); set => throw new NotImplementedException(); }
+    [JsonIgnore] //ignored for jsoin serialization
+    public List<CommentDbM> CommentsDbM { get; set;}
+    [NotMapped]
+    public override IAddress Address { get => AddressDbM; set => throw new NotImplementedException(); }
+    [JsonIgnore]
+    public AddressDbM AddressDbM { get; set; }
+
     public override AttractionModelDbM Seed (csSeedGenerator _seeder)
     {
         base.Seed (_seeder);

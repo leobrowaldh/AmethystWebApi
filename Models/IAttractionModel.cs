@@ -11,6 +11,6 @@ public interface IAttractionModel
     public string Description { get; set; }
     public bool Seeded { get; set; }
 
-    public IComment Comments { get; set; }
+    public List<IComment> Comments { get; set; }
     public IAddress Address { get; set; }
 }
