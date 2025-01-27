@@ -141,7 +141,7 @@ public class AttractionDbRepos
         await _dbContext.SaveChangesAsync();
 
         //return the updated item in non-flat mode
-        return await ReadItemAsync(item.AttractionId);    
+        return await ReadItemAsync(item.AttractionId, false);    
     }
 
     public async Task<ResponseItemDto<IAttractionModel>> CreateItemAsync(AttractionCuDto itemDto)
@@ -160,7 +160,7 @@ public class AttractionDbRepos
         await _dbContext.SaveChangesAsync();
 
         //return the updated item in non-flat mode
-        return await ReadItemAsync(item.AttractionId);
+        return await ReadItemAsync(item.AttractionId, false);
     }
 
 
