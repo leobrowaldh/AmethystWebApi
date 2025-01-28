@@ -6,18 +6,18 @@ DROP PROCEDURE IF EXISTS gstusr.spLogin
 GO
 
 -- remove roles
-ALTER ROLE zoosefcGstUsr DROP MEMBER gstusrUser;
-ALTER ROLE zoosefcGstUsr DROP MEMBER usrUser;
-ALTER ROLE zoosefcGstUsr DROP MEMBER supusrUser;
+ALTER ROLE efcGstUsr DROP MEMBER gstusrUser;
+ALTER ROLE efcGstUsr DROP MEMBER usrUser;
+ALTER ROLE efcGstUsr DROP MEMBER supusrUser;
 
-ALTER ROLE zoosefcUsr DROP MEMBER usrUser;
-ALTER ROLE zoosefcUsr DROP MEMBER supusrUser;
+ALTER ROLE efcUsr DROP MEMBER usrUser;
+ALTER ROLE efcUsr DROP MEMBER supusrUser;
 
-ALTER ROLE zoosefcSupUsr DROP MEMBER supusrUser;
+ALTER ROLE efcSupUsr DROP MEMBER supusrUser;
 
-DROP ROLE IF EXISTS zoosefcGstUsr;
-DROP ROLE IF EXISTS zoosefcUsr;
-DROP ROLE IF EXISTS zoosefcSupUsr;
+DROP ROLE IF EXISTS efcGstUsr;
+DROP ROLE IF EXISTS efcUsr;
+DROP ROLE IF EXISTS efcSupUsr;
 GO
 
 --drop users
@@ -37,13 +37,9 @@ DROP VIEW IF EXISTS [gstusr].[vwInfoEmployees]
 GO
 
 --drop tables in the right order not to get fk conflicts
-DROP TABLE IF EXISTS supusr.TemplateModel;
-DROP TABLE IF EXISTS dbo.Users;
-DROP TABLE IF EXISTS supusr.EmployeeDbMZooDbM;
-DROP TABLE IF EXISTS supusr.Animals;
-DROP TABLE IF EXISTS supusr.Zoos;
-DROP TABLE IF EXISTS supusr.CreditCards;
-DROP TABLE IF EXISTS supusr.Employees;
+DROP TABLE IF EXISTS supusr.Attractions;
+DROP TABLE IF EXISTS supusr.Addresses;
+DROP TABLE IF EXISTS supusr.Comments;
 DROP TABLE IF EXISTS dbo.__EFMigrationsHistory;
 GO
 
