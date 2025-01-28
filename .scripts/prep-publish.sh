@@ -38,7 +38,7 @@ export AZURE_CLIENT_SECRET=$(./az-access-secrets.sh $AzureProjectSettings app pa
 
 #Set the environment variables to the ws application
 printf "\n\nSet the environment variables to the azure web application"
-./az-apps-set-env.sh $AzureProjectSettings
+#./az-apps-set-env.sh $AzureProjectSettings
 
 cd $PWDIR
 
@@ -56,7 +56,6 @@ rm -rf $PublishDirectory
 
 cd $ApplicationDirectory
 dotnet publish --configuration Release --output ./publish
-
 
 #Step3: Run the application from the folder containing the release files.
 printf "\n\nRun the webapi from the published directory...\n"
