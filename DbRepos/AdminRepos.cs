@@ -8,18 +8,21 @@ using DbModels;
 using DbContext;
 using Models;
 using Seido.Utilities.SeedGenerator;
+using Configuration;
 
 namespace DbRepos;
 
 public class AdminDbRepos
 {
     private readonly ILogger<AdminDbRepos> _logger;
+    private Encryptions _encryptions;
     private readonly MainDbContext _dbContext;
 
     #region contructors
-    public AdminDbRepos(ILogger<AdminDbRepos> logger, MainDbContext context)
+    public AdminDbRepos(ILogger<AdminDbRepos> logger, Encryptions encryptions, MainDbContext context)
     {
         _logger = logger;
+        _encryptions = encryptions;
         _dbContext = context;
     }
     #endregion
