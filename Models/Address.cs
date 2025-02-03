@@ -25,8 +25,8 @@ public class Address:IAddress, ISeed<Address>
         City = seeder.FromEnum<City>();
         Country = seeder.FromEnum<Country>();
 
-        StreetName = seeder.FullName;
-        ZipCode = seeder.Next(00001, 9999);
+        StreetName = seeder.StreetAddress();
+        ZipCode = seeder.ZipCode;
 
         return this;
     }
