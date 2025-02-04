@@ -23,6 +23,7 @@ echo "AzureScriptDirectory="$AzureScriptDirectory
 echo "AzureProjectSettings="$AzureProjectSettings
 echo "ApplicationDirectory="$ApplicationDirectory
 echo "PublishDirectory="$PublishDirectory
+
 #exit
 
 #Step1: Set the Azure Keyvault access parameters as operating system environment variables.
@@ -38,7 +39,7 @@ export AZURE_CLIENT_SECRET=$(./az-access-secrets.sh $AzureProjectSettings app pa
 
 #Set the environment variables to the ws application
 printf "\n\nSet the environment variables to the azure web application"
-./az-apps-set-env.sh $AzureProjectSettings
+#./az-apps-set-env.sh $AzureProjectSettings
 
 cd $PWDIR
 
