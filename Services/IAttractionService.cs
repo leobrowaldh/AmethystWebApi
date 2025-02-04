@@ -12,4 +12,11 @@ public interface IAttractionService {
     public Task<ResponseItemDto<IAttractionModel>> CreateAttractionAsync(AttractionCuDto item);
 
 
+
+  //  public Task<ResponsePageDto<IBanks>> ReadCreditCardsAsync(bool seeded, bool flat, string filter, int pageNumber, int pageSize);
+  //  public Task<ResponseItemDto<IBanks>> ReadCreditCardAsync(Guid id, bool flat);
+   // public Task<ResponseItemDto<IBanks>> DeleteCreditCardAsync(Guid id);
+    public Task<ResponseItemDto<IBanks>> CreateCreditCardAsync(BankCuDto item);
+//
+
 }

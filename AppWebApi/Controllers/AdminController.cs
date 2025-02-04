@@ -36,10 +36,10 @@ namespace AppWebApi.Controllers
                 _logger.LogInformation($"{nameof(Info)}:\n{JsonConvert.SerializeObject(info)}");
                 return Ok(info);
             }
-            catch (Exception ex)
+             catch (Exception ex)
             {
-                _logger.LogError($"{nameof(Info)}: {ex.Message}");
-                return BadRequest(ex.Message);
+                _logger.LogError($"{nameof(Info)}: {ex.Message}.{ex.InnerException?.Message}");
+                return BadRequest($"{ex.Message}.{ex.InnerException?.Message}");
             }
          }
 
