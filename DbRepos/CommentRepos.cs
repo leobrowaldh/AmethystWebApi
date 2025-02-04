@@ -48,6 +48,7 @@ public class CommentDbRepos
     public async Task<ResponsePageDto<IComment>> ReadItemsAsync(bool seeded, bool flat, string filter, int pageNumber, int pageSize)
     {
         filter ??= "";
+        filter = filter.ToLower();
         IQueryable<CommentDbM> query;
         if (flat)
         {

@@ -35,7 +35,7 @@ public class AttractionController : Controller
             _logger.LogInformation($"{nameof(Read)}: {nameof(seeded)}: {seeded}, " +
                 $"{nameof(pageNr)}: {pageNr}, {nameof(pageSize)}: {pageSize}");
             
-            var attractions = await _attractionService.ReadAsync(seeded, flat, filter?.Trim().ToLower(), pageNr, pageSize);
+            var attractions = await _attractionService.ReadAttractionsAsync(seeded, flat, filter?.Trim().ToLower(), pageNr, pageSize);
             return Ok(attractions);
         }
         catch (Exception ex)
@@ -54,7 +54,7 @@ public class AttractionController : Controller
             Guid guidId = Guid.Parse(id);
             _logger.LogInformation($"{nameof(Read)}");
 
-            var attraction = await _attractionService.ReadItemAsync(guidId, flat);
+            var attraction = await _attractionService.ReadAttractionAsync(guidId, flat);
             if (attraction?.Item == null) throw new ArgumentException($"Item with id {id} does not exist");
             return Ok(attraction);
         }

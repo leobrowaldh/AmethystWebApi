@@ -14,12 +14,12 @@ namespace AppWebApi.Controllers;
 [Route("api/[controller]/[action]")]
 public class CommentController : Controller
 {
-    readonly ICommentService _commentService;
+    readonly IAttractionService _attractionService;
     readonly ILogger<CommentController> _logger;
 
-    public CommentController(ICommentService commentService, ILogger<CommentController> logger)
+    public CommentController(IAttractionService attractionService, ILogger<CommentController> logger)
     {
-        _commentService = commentService;
+        _attractionService = attractionService;
         _logger = logger;
     }
 
@@ -35,7 +35,7 @@ public class CommentController : Controller
             _logger.LogInformation($"{nameof(Read)}: {nameof(seeded)}: {seeded}, " +
                 $"{nameof(pageNr)}: {pageNr}, {nameof(pageSize)}: {pageSize}");
             
-            var attractions = await _commentService.ReadAsync(seeded, flat, filter?.Trim().ToLower(), pageNr, pageSize);
+            var attractions = await _attractionService.ReadCommentsAsync(seeded, flat, filter?.Trim().ToLower(), pageNr, pageSize);
             return Ok(attractions);
         }
         catch (Exception ex)
@@ -54,7 +54,7 @@ public class CommentController : Controller
             Guid guidId = Guid.Parse(id);
             _logger.LogInformation($"{nameof(Read)}");
 
-            var attraction = await _commentService.ReadCommentAsync(guidId, flat);
+            var attraction = await _attractionService.ReadCommentAsync(guidId, flat);
             if (attraction?.Item == null) throw new ArgumentException($"Item with id {id} does not exist");
             return Ok(attraction);
         }

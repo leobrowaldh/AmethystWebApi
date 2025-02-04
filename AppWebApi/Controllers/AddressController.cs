@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Models;
+using Services;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,12 +12,12 @@ namespace AppWebApi.Controllers
     [Route("[controller]")]
     public class AddressController : ControllerBase
     {
-        private readonly IAddressService _addressService;
+        private readonly IAttractionService _attractionService;
         private readonly ILogger<AddressController> _logger;
 
-        public AddressController(IAddressService addressService, ILogger<AddressController> logger)
+        public AddressController(IAttractionService attractionService, ILogger<AddressController> logger)
         {
-            _addressService = addressService;
+            _attractionService = attractionService;
             _logger = logger;
         }
 
@@ -30,7 +32,7 @@ namespace AppWebApi.Controllers
                 _logger.LogInformation($"{nameof(Read)}: {nameof(seeded)}: {seeded}, " +
                     $"{nameof(pageNr)}: {pageNr}, {nameof(pageSize)}: {pageSize}");
 
-                var addresses = await _addressService.ReadAsync(seeded, flat, filter?.Trim().ToLower(), pageNr, pageSize);
+                var addresses = await _attractionService.ReadAddressesAsync(seeded, flat, filter?.Trim().ToLower(), pageNr, pageSize);
                 return Ok(addresses);
             }
             catch (Exception ex)
@@ -41,7 +43,7 @@ namespace AppWebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        [ProducesResponseType(200, Type = typeof(IAddressModel))]
+        [ProducesResponseType(200, Type = typeof(IAddress))]
         public async Task<IActionResult> ReadItem(string id = null, bool flat = false)
         {
             try
@@ -49,7 +51,7 @@ namespace AppWebApi.Controllers
                 Guid guidId = Guid.Parse(id);
                 _logger.LogInformation($"{nameof(ReadItem)}");
 
-                var address = await _addressService.ReadAddressAsync(guidId, flat);
+                var address = await _attractionService.ReadAddressAsync(guidId, flat);
                 if (address?.Item == null) throw new ArgumentException($"Item with id {id} does not exist");
                 return Ok(address);
             }
