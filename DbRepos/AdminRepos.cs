@@ -46,7 +46,7 @@ public class AdminDbRepos
 
         var rnd = new csSeedGenerator();
 
-        var attractions = rnd.ItemsToList<AttractionModelDbM>(nrOfItems);
+        var attractions = rnd.ItemsToList<AttractionDbM>(nrOfItems);
         foreach (var attraction in attractions)
         {
             attraction.AddressDbM = new AddressDbM().Seed(rnd);

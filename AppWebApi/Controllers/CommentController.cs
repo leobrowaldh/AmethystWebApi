@@ -46,7 +46,7 @@ public class CommentController : Controller
     }
 
     [HttpGet()]
-    [ProducesResponseType(200, Type = typeof(IAttractionModel))]
+    [ProducesResponseType(200, Type = typeof(IComment))]
     public async Task<IActionResult> ReadItem(string id = null, bool flat = false)
     {
         try
@@ -54,9 +54,9 @@ public class CommentController : Controller
             Guid guidId = Guid.Parse(id);
             _logger.LogInformation($"{nameof(Read)}");
 
-            var attraction = await _attractionService.ReadCommentAsync(guidId, flat);
-            if (attraction?.Item == null) throw new ArgumentException($"Item with id {id} does not exist");
-            return Ok(attraction);
+            var comment = await _attractionService.ReadCommentAsync(guidId, flat);
+            if (comment?.Item == null) throw new ArgumentException($"Item with id {id} does not exist");
+            return Ok(comment);
         }
         catch (Exception ex)
         {
@@ -65,7 +65,77 @@ public class CommentController : Controller
         }
     }
 
+    [HttpDelete("{id}")]
+    [ProducesResponseType(200, Type = typeof(ResponseItemDto<IComment>))]
+    [ProducesResponseType(400, Type = typeof(string))]
+    public async Task<IActionResult> DeleteItem(string id)
+    {
+        try
+        {
+            var idArg = Guid.Parse(id);
+
+            _logger.LogInformation($"{nameof(DeleteItem)}: {nameof(idArg)}: {idArg}");
+            
+            var item = await _attractionService.DeleteCommentAsync(idArg);
+            if (item?.Item == null) throw new ArgumentException ($"Item with id {id} does not exist");
     
+            _logger.LogInformation($"item {idArg} deleted");
+            return Ok(item);                
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"{nameof(DeleteItem)}: {ex.Message}");
+            return BadRequest(ex.Message);
+        }
+    }
+
+
+
+    [HttpPut("{id}")]
+    [ProducesResponseType(200, Type = typeof(ResponseItemDto<IComment>))]
+    [ProducesResponseType(400, Type = typeof(string))]
+    public async Task<IActionResult> UpdateItem(string id, [FromBody] CommentCuDto item)
+    {
+        try
+        {
+            var idArg = Guid.Parse(id);
+
+            _logger.LogInformation($"{nameof(UpdateItem)}: {nameof(idArg)}: {idArg}");
+            
+            if (item.CommentId != idArg) throw new ArgumentException("Id mismatch");
+
+            var _item = await _attractionService.UpdateCommentAsync(item);
+            _logger.LogInformation($"item {idArg} updated");
+           
+            return Ok(_item);             
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"{nameof(UpdateItem)}: {ex.Message}");
+            return BadRequest($"Could not update. Error {ex.Message}");
+        }
+    }
+
+    [HttpPost()]
+    [ProducesResponseType(200, Type = typeof(ResponseItemDto<IComment>))]
+    [ProducesResponseType(400, Type = typeof(string))]
+    public async Task<IActionResult> CreateItem([FromBody] CommentCuDto item)
+    {
+        try
+        {
+            _logger.LogInformation($"{nameof(CreateItem)}:");
+
+            var _item = await _attractionService.CreateCommentAsync(item);
+            _logger.LogInformation($"item {_item.Item.CommentId} created");
+
+            return Ok(_item);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"{nameof(CreateItem)}: {ex.Message}");
+            return BadRequest($"Could not create. Error {ex.Message}");
+        }
+    }
 }
 
 

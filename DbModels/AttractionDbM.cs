@@ -9,7 +9,7 @@ using Seido.Utilities.SeedGenerator;
 namespace DbModels;
 
 [Table("Attractions", Schema = "supusr")]
-public class AttractionModelDbM : AttractionModel, ISeed<AttractionModelDbM>
+public class AttractionDbM : Attraction, ISeed<AttractionDbM>
 {
     [Key]
     public override Guid AttractionId { get; set; }
@@ -34,7 +34,7 @@ public class AttractionModelDbM : AttractionModel, ISeed<AttractionModelDbM>
     [JsonIgnore]
     public AddressDbM AddressDbM { get; set; }
 
-    public override AttractionModelDbM Seed (csSeedGenerator _seeder)
+    public override AttractionDbM Seed (csSeedGenerator _seeder)
     {
         base.Seed (_seeder);
         return this;
@@ -43,7 +43,7 @@ public class AttractionModelDbM : AttractionModel, ISeed<AttractionModelDbM>
 
 
     
-    public AttractionModelDbM UpdateFromDTO(AttractionCuDto org)
+    public AttractionDbM UpdateFromDTO(AttractionCuDto org)
     {
         if (org == null) return null;
 
@@ -55,9 +55,9 @@ public class AttractionModelDbM : AttractionModel, ISeed<AttractionModelDbM>
         return this;
     }
 
-    public AttractionModelDbM() { }
+    public AttractionDbM() { }
 
-    public AttractionModelDbM(AttractionCuDto org)
+    public AttractionDbM(AttractionCuDto org)
     {
         AttractionId = Guid.NewGuid();
         UpdateFromDTO(org);

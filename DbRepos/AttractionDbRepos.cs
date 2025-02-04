@@ -21,9 +21,9 @@ public class AttractionDbRepos
         _dbContext = context;
     }
 
-    public async Task<ResponseItemDto<IAttractionModel>> ReadItemAsync(Guid id, bool flat)
+    public async Task<ResponseItemDto<IAttraction>> ReadItemAsync(Guid id, bool flat)
     {
-        IQueryable<AttractionModelDbM> query;
+        IQueryable<AttractionDbM> query;
 
         if (!flat)
         {
@@ -39,20 +39,20 @@ public class AttractionDbRepos
 
         
 
-        var resp = await query.FirstOrDefaultAsync<IAttractionModel>();
-        return new ResponseItemDto<IAttractionModel>()
+        var resp = await query.FirstOrDefaultAsync<IAttraction>();
+        return new ResponseItemDto<IAttraction>()
         {
             DbConnectionKeyUsed = _dbContext.dbConnection,
             Item = resp
         };
     }
 
-    public async Task<ResponsePageDto<IAttractionModel>> ReadItemsAsync(bool seeded, bool flat, string filter, int pageNumber, int pageSize)
+    public async Task<ResponsePageDto<IAttraction>> ReadItemsAsync(bool seeded, bool flat, string filter, int pageNumber, int pageSize)
     {
         filter ??= "";
         filter = filter.ToLower();
 
-        IQueryable<AttractionModelDbM> query;
+        IQueryable<AttractionDbM> query;
         
         if (flat)
         {
@@ -64,7 +64,7 @@ public class AttractionDbRepos
                 .Include(a => a.Comments);
         }
 
-        return new ResponsePageDto<IAttractionModel>()
+        return new ResponsePageDto<IAttraction>()
         {
             DbConnectionKeyUsed = _dbContext.dbConnection,
             DbItemsCount = await query
@@ -86,7 +86,7 @@ public class AttractionDbRepos
             .Skip(pageNumber * pageSize)
             .Take(pageSize)
 
-            .ToListAsync<IAttractionModel>(),
+            .ToListAsync<IAttraction>(),
 
             PageNr = pageNumber,
             PageSize = pageSize
@@ -96,12 +96,12 @@ public class AttractionDbRepos
         
     }
 
-    public async Task<ResponseItemDto<IAttractionModel>> DeleteAttractionAsync(Guid id)
+    public async Task<ResponseItemDto<IAttraction>> DeleteAttractionAsync(Guid id)
     {
         //Find the instance with matching id
         var query1 = _dbContext.Attractions
             .Where(i => i.AttractionId == id);
-        var item = await query1.FirstOrDefaultAsync<AttractionModelDbM>();
+        var item = await query1.FirstOrDefaultAsync<AttractionDbM>();
 
         //If the item does not exists
         if (item == null) throw new ArgumentException($"Item {id} is not existing");
@@ -112,20 +112,20 @@ public class AttractionDbRepos
         //write to database in a UoW
         await _dbContext.SaveChangesAsync();
 
-        return new ResponseItemDto<IAttractionModel>()
+        return new ResponseItemDto<IAttraction>()
         {
             DbConnectionKeyUsed = _dbContext.dbConnection,
             Item = item
         };
     }
 
-    public async Task<ResponseItemDto<IAttractionModel>> UpdateAttractionAsync(AttractionCuDto itemDto)
+    public async Task<ResponseItemDto<IAttraction>> UpdateAttractionAsync(AttractionCuDto itemDto)
     {
         //Find the instance with matching id and read the navigation properties.
         var query1 = _dbContext.Attractions
             .Where(i => i.AttractionId == itemDto.AttractionId);
         var item = await query1
-            .FirstOrDefaultAsync<AttractionModelDbM>();
+            .FirstOrDefaultAsync<AttractionDbM>();
 
         //If the item does not exists
         if (item == null) throw new ArgumentException($"Item {itemDto.AttractionId} is not existing");
@@ -144,14 +144,14 @@ public class AttractionDbRepos
         return await ReadItemAsync(item.AttractionId, false);    
     }
 
-    public async Task<ResponseItemDto<IAttractionModel>> CreateItemAsync(AttractionCuDto itemDto)
+    public async Task<ResponseItemDto<IAttraction>> CreateItemAsync(AttractionCuDto itemDto)
     {
         if (itemDto.AttractionId != null)
             throw new ArgumentException($"{nameof(itemDto.AttractionId)} must be null when creating a new object");
 
         //transfer any changes from DTO to database objects
         //Update individual properties Zoo
-        var item = new AttractionModelDbM(itemDto);
+        var item = new AttractionDbM(itemDto);
 
         //write to database model
         _dbContext.Attractions.Add(item);

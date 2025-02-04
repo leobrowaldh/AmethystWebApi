@@ -29,11 +29,9 @@ builder.Services.AddScoped<AdminDbRepos>();
 builder.Services.AddScoped<AttractionDbRepos>();
 builder.Services.AddScoped<CommentDbRepos>();
 builder.Services.AddScoped<LoginDbRepos>();
-// builder.Services.AddScoped<AddressDbRepos>();
+builder.Services.AddScoped<AddressDbRepos>();
 builder.Services.AddScoped<IAdminService, AdminServiceDb>();
 builder.Services.AddScoped<IAttractionService, AttractionServiceDb>();
-builder.Services.AddScoped<ICommentService, CommentServiceDb>();
-// builder.Services.AddScoped<IAddressService, AddressServiceDb>();
 builder.Services.AddScoped<ILoginService, LoginServiceDb>();
 
 

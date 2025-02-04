@@ -5,21 +5,21 @@ namespace Services;
 
 public interface IAttractionService {
 
-    public Task<ResponsePageDto<IAttractionModel>> ReadAttractionsAsync(bool seeded, bool flat, string filter, int pageNumber, int pageSize);
-    public Task<ResponseItemDto<IAttractionModel>> ReadAttractionAsync(Guid id, bool flat);
-    public Task<ResponseItemDto<IAttractionModel>> DeleteAttractionAsync(Guid id);
-    public Task<ResponseItemDto<IAttractionModel>> UpdateAttractionAsync(AttractionCuDto item);
-    public Task<ResponseItemDto<IAttractionModel>> CreateAttractionAsync(AttractionCuDto item);
+    public Task<ResponsePageDto<IAttraction>> ReadAttractionsAsync(bool seeded, bool flat, string filter, int pageNumber, int pageSize);
+    public Task<ResponseItemDto<IAttraction>> ReadAttractionAsync(Guid id, bool flat);
+    public Task<ResponseItemDto<IAttraction>> DeleteAttractionAsync(Guid id);
+    public Task<ResponseItemDto<IAttraction>> UpdateAttractionAsync(AttractionCuDto item);
+    public Task<ResponseItemDto<IAttraction>> CreateAttractionAsync(AttractionCuDto item);
     public Task<ResponsePageDto<IComment>> ReadCommentsAsync(bool seeded,bool flat, string filter, int pageNumber, int pageSize);
     public Task<ResponseItemDto<IComment>> ReadCommentAsync(Guid id,bool flat);
     public Task<ResponseItemDto<IComment>> DeleteCommentAsync(Guid id);
     public Task<ResponseItemDto<IComment>> UpdateCommentAsync(CommentCuDto item);
     public Task<ResponseItemDto<IComment>> CreateCommentAsync(CommentCuDto item);
-    public Task<ResponsePageDto<IComment>> ReadAddressesAsync(bool seeded,bool flat, string filter, int pageNumber, int pageSize);
-    public Task<ResponseItemDto<IComment>> ReadAddressAsync(Guid id,bool flat);
-    public Task<ResponseItemDto<IComment>> DeleteAddressAsync(Guid id);
-    public Task<ResponseItemDto<IComment>> UpdateAddressAsync(CommentCuDto item);
-    public Task<ResponseItemDto<IComment>> CreateAddressAsync(CommentCuDto item);
+    public Task<ResponsePageDto<IAddress>> ReadAddressesAsync(bool seeded,bool flat, string filter, int pageNumber, int pageSize);
+    public Task<ResponseItemDto<IAddress>> ReadAddressAsync(Guid id,bool flat);
+    public Task<ResponseItemDto<IAddress>> DeleteAddressAsync(Guid id);
+    public Task<ResponseItemDto<IAddress>> UpdateAddressAsync(AddressCuDto item);
+    public Task<ResponseItemDto<IAddress>> CreateAddressAsync(AddressCuDto item);
 
 
 }

@@ -24,7 +24,7 @@ public class MainDbContext : Microsoft.EntityFrameworkCore.DbContext
     public string dbConnection  => _databaseConnections.GetDbConnection(this.Database.GetConnectionString());
 
     #region C# model of database tables
-    public DbSet<AttractionModelDbM> Attractions { get; set; }
+    public DbSet<AttractionDbM> Attractions { get; set; }
     public DbSet<CommentDbM> Comments { get; set; }
     public DbSet<AddressDbM> Addresses { get; set; }
     public DbSet<UserDbM> Users { get; set; }   

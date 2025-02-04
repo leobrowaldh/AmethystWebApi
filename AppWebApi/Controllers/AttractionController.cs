@@ -24,7 +24,7 @@ public class AttractionController : Controller
     }
 
     [HttpGet()]
-    [ProducesResponseType(200, Type = typeof(List<IAttractionModel>))]
+    [ProducesResponseType(200, Type = typeof(List<IAttraction>))]
     [ProducesResponseType(400, Type = typeof(string))]
     public async Task<IActionResult> Read(bool seeded = true, bool flat = true, string filter = null,
         int pageNr = 0, int pageSize = 10)
@@ -46,7 +46,7 @@ public class AttractionController : Controller
     }
 
     [HttpGet()]
-    [ProducesResponseType(200, Type = typeof(IAttractionModel))]
+    [ProducesResponseType(200, Type = typeof(IAttraction))]
     public async Task<IActionResult> ReadItem(string id = null, bool flat = false)
     {
         try
@@ -66,7 +66,7 @@ public class AttractionController : Controller
     }
 
     [HttpDelete("{id}")]
-    [ProducesResponseType(200, Type = typeof(ResponseItemDto<AttractionModel>))]
+    [ProducesResponseType(200, Type = typeof(ResponseItemDto<IAttraction>))]
     [ProducesResponseType(400, Type = typeof(string))]
     public async Task<IActionResult> DeleteItem(string id)
     {
@@ -92,7 +92,7 @@ public class AttractionController : Controller
 
 
     [HttpPut("{id}")]
-    [ProducesResponseType(200, Type = typeof(ResponseItemDto<IAttractionModel>))]
+    [ProducesResponseType(200, Type = typeof(ResponseItemDto<IAttraction>))]
     [ProducesResponseType(400, Type = typeof(string))]
     public async Task<IActionResult> UpdateItem(string id, [FromBody] AttractionCuDto item)
     {
@@ -117,7 +117,7 @@ public class AttractionController : Controller
     }
 
     [HttpPost()]
-    [ProducesResponseType(200, Type = typeof(ResponseItemDto<IAttractionModel>))]
+    [ProducesResponseType(200, Type = typeof(ResponseItemDto<IAttraction>))]
     [ProducesResponseType(400, Type = typeof(string))]
     public async Task<IActionResult> CreateItem([FromBody] AttractionCuDto item)
     {

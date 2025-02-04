@@ -14,5 +14,5 @@ public interface IComment
     public string CommentName { get; set; }
     public string CommentText { get; set; }
 
-    public IAttractionModel AttractionModel { get; set; }
+    public IAttraction AttractionModel { get; set; }
 }

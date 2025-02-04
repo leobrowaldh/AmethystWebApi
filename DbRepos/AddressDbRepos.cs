@@ -168,10 +168,10 @@ public class AddressDbRepos
     private async Task navProp_ItemCUdto_to_ItemDbM(AddressCuDto itemDtoSrc, AddressDbM itemDst)
     {
         //update zoo nav props
-        List<AttractionModelDbM> attractions = null;
+        List<AttractionDbM> attractions = null;
         if (itemDtoSrc.AttractionIds != null)
         {
-            attractions = new List<AttractionModelDbM>();
+            attractions = new List<AttractionDbM>();
             foreach (var id in itemDtoSrc.AttractionIds)
             {
                 var a = await _dbContext.Attractions.FirstOrDefaultAsync(i => i.AttractionId == id);

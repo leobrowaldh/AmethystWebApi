@@ -3,7 +3,7 @@ namespace Models;
 public enum AttractionCategory { Nature, Historical, Party, Museeum, Adventure, Cultural, Entertainment, Thrill}
 
 
-public interface IAttractionModel
+public interface IAttraction
 {
     public Guid AttractionId { get; set; }
     public string Name { get; set; }

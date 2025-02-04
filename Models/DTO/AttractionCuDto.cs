@@ -19,7 +19,7 @@ public class AttractionCuDto
     public string Name { get; set; }
 
     public AttractionCuDto() { }
-    public AttractionCuDto(IAttractionModel org)
+    public AttractionCuDto(IAttraction org)
     {
         AttractionId = org.AttractionId;
         Name = org.Name;

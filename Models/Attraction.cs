@@ -3,7 +3,7 @@ using Seido.Utilities.SeedGenerator;
 
 namespace Models;
 
-public class AttractionModel: IAttractionModel, ISeed<AttractionModel>
+public class Attraction: IAttraction, ISeed<Attraction>
 {
     public virtual Guid AttractionId { get; set; }
     public virtual string Name { get; set; }
@@ -14,7 +14,7 @@ public class AttractionModel: IAttractionModel, ISeed<AttractionModel>
 
     public bool Seeded { get; set; }
 
-    public virtual AttractionModel Seed(csSeedGenerator rnd)
+    public virtual Attraction Seed(csSeedGenerator rnd)
     {
         this.Name = rnd.FromList(SeedingStrings.AttractionFirstName) + " " + rnd.FromList(SeedingStrings.AttractionLastName);
         this.Category = rnd.FromEnum<AttractionCategory>();
