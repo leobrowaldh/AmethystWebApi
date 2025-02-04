@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using Models;
 using Seido.Utilities.SeedGenerator;
+using Models.DTO;
 
 namespace DbModels;
 
@@ -12,16 +13,25 @@ public class AddressDbM:Address, ISeed<AddressDbM>
     [Key]
     public override Guid AddressId { get; set; }
     [Required]
-    public override City City { get; set; }
+    public virtual string strCity
+    { 
+        get => City.ToString();
+        set { }
+    }
     [Required]
-    public override Country Country { get; set; }
+    public virtual string strCountry
+    { 
+        get => Country.ToString(); 
+        set { }
+    }
+    
     [Required]
     public override string StreetName { get; set; }
 
     [NotMapped]
     public override List<IAttractionModel> AttractionModels { get; set; }
     [JsonIgnore]
-    public List<AttractionModelDbM> AttractionModelDbMs { get; set; }
+    public List<AttractionModelDbM> AttractionModelDbM { get; set; }
 
     public override AddressDbM Seed (csSeedGenerator _seeder)
     {
@@ -29,18 +39,22 @@ public class AddressDbM:Address, ISeed<AddressDbM>
         return this;
     }
 
-    // public AddressDbM UpdateFromDTO(AddressCuDto org)
-    // {
-    //     if (org == null) return null;
+    public AddressDbM UpdateFromDTO(AddressCuDto org)
+    {
+        if (org == null) return null;
 
+        City = org.City;
+        Country = org.Country;
+        StreetName = org.StreetName;
+        ZipCode = org.ZipCode;
 
-    //     return this;
-    // }
+        return this;
+    }
 
     public AddressDbM() { }
-    // public AddressDbM(AddressCuDto org)
-    // {
-    //     AddressId = Guid.NewGuid();
-    //     UpdateFromDTO(org);
-    // }
+    public AddressDbM(AddressCuDto org)
+    {
+        AddressId = Guid.NewGuid();
+        UpdateFromDTO(org);
+    }
 }

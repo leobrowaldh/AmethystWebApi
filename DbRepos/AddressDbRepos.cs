@@ -33,7 +33,7 @@ public class AddressDbRepos
         }
         else
         {
-            query = _dbContext.Address.AsNoTracking()
+            query = _dbContext.Addresses.AsNoTracking()
                 .Where(i => i.AddressId == id);
         }
 
@@ -51,11 +51,11 @@ public class AddressDbRepos
         IQueryable<AddressDbM> query;
         if (flat)
         {
-            query = _dbContext.Address.AsNoTracking();
+            query = _dbContext.Addresses.AsNoTracking();
         }
         else
         {
-            query = _dbContext.Address.AsNoTracking()
+            query = _dbContext.Addresses.AsNoTracking()
                 .Include(i => i.AttractionModelDbM);
         }
 
@@ -168,12 +168,20 @@ public class AddressDbRepos
     private async Task navProp_ItemCUdto_to_ItemDbM(AddressCuDto itemDtoSrc, AddressDbM itemDst)
     {
         //update zoo nav props
-        var zoo = await _dbContext.Attractions.FirstOrDefaultAsync(
-            a => (a.AttractionId == itemDtoSrc.AttractionId));
+        List<AttractionModelDbM> attractions = null;
+        if (itemDtoSrc.AttractionIds != null)
+        {
+            attractions = new List<AttractionModelDbM>();
+            foreach (var id in itemDtoSrc.AttractionIds)
+            {
+                var a = await _dbContext.Attractions.FirstOrDefaultAsync(i => i.AttractionId == id);
+                if (a == null)
+                    throw new ArgumentException($"Item id {id} not existing");
 
-        if (zoo == null)
-            throw new ArgumentException($"Item id {itemDtoSrc.AttractionId} not existing");
+                attractions.Add(a);
+            }
+        }
 
-        itemDst.AttractionModelDbM = zoo;
+        itemDst.AttractionModelDbM = attractions;
     }
 }
