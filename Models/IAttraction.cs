@@ -13,4 +13,5 @@ public interface IAttraction
 
     public List<IComment> Comments { get; set; }
     public IAddress Address { get; set; }
+    public IBank Bank { get; set; }
 }

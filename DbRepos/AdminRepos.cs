@@ -55,7 +55,18 @@ public class AdminDbRepos
         _dbContext.Attractions.AddRange(attractions);
         await _dbContext.SaveChangesAsync();
         return await InfoAsync();
+
+
+
+
+        
     }
+
+
+    
+
+
+    
     
     public async Task<ResponseItemDto<GstUsrInfoAllDto>> RemoveSeedAsync(bool seeded)
     {
