@@ -14,6 +14,8 @@ public class AttractionModel: IAttractionModel, ISeed<AttractionModel>
 
     public bool Seeded { get; set; }
 
+     public virtual IBank Bank { get; set; }
+   
     public virtual AttractionModel Seed(csSeedGenerator rnd)
     {
         this.Name = rnd.FromList(SeedingStrings.AttractionFirstName) + " " + rnd.FromList(SeedingStrings.AttractionLastName);

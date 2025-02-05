@@ -23,7 +23,7 @@ public class BankCuDto
     public Guid AttractionId { get; set; }
 
     public BankCuDto() { }
-    public BankCuDto(IBanks org)
+    public BankCuDto(IBank org)
     {
         BankId = org.BankId;
 

@@ -12,19 +12,19 @@ namespace AppWebApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    public class CreditCardController : Controller
+    public class BankController : Controller
     {
         readonly IAttractionService _service = null;
-        readonly ILogger<CreditCardController> _logger = null;
+        readonly ILogger<BankController> _logger = null;
 
-        public CreditCardController(IAttractionService service, ILogger<CreditCardController> logger)
+        public BankController(IAttractionService service, ILogger<BankController> logger)
         {
             _service = service;
             _logger = logger;
         }
 
         [HttpGet()]
-        [ProducesResponseType(200, Type = typeof(ResponsePageDto<ICreditCard>))]
+        [ProducesResponseType(200, Type = typeof(ResponsePageDto<IBank>))]
         [ProducesResponseType(400, Type = typeof(string))]
         public async Task<IActionResult> ReadItems(string seeded = "true", string flat = "true",
             string filter = null, string pageNr = "0", string pageSize = "10")
@@ -39,7 +39,7 @@ namespace AppWebApi.Controllers
                 _logger.LogInformation($"{nameof(ReadItems)}: {nameof(seededArg)}: {seededArg}, {nameof(flatArg)}: {flatArg}, " +
                     $"{nameof(pageNrArg)}: {pageNrArg}, {nameof(pageSizeArg)}: {pageSizeArg}");
                 
-                var resp = await _service.ReadCreditCardsAsync(seededArg, flatArg, filter?.Trim().ToLower(), pageNrArg, pageSizeArg);     
+                var resp = await _service.ReadBankAsync(seededArg, flatArg, filter?.Trim().ToLower(), pageNrArg, pageSizeArg);     
                 return Ok(resp);
             }
             catch (Exception ex)
@@ -50,7 +50,7 @@ namespace AppWebApi.Controllers
         }
 
         [HttpGet()]
-        [ProducesResponseType(200, Type = typeof(ResponseItemDto<ICreditCard>))]
+        [ProducesResponseType(200, Type = typeof(ResponseItemDto<IBank>))]
         [ProducesResponseType(400, Type = typeof(string))]
         [ProducesResponseType(404, Type = typeof(string))]
         public async Task<IActionResult> ReadItem(string id = null, string flat = "false")
@@ -62,7 +62,7 @@ namespace AppWebApi.Controllers
 
                 _logger.LogInformation($"{nameof(ReadItem)}: {nameof(idArg)}: {idArg}, {nameof(flatArg)}: {flatArg}");
                 
-                var item = await _service.ReadCreditCardAsync(idArg, flatArg);
+                var item = await _service.ReadBanksAsync(idArg, flatArg);
                 if (item?.Item == null) throw new ArgumentException ($"Item with id {id} does not exist");
 
                 return Ok(item);
@@ -75,7 +75,7 @@ namespace AppWebApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        [ProducesResponseType(200, Type = typeof(ResponseItemDto<ICreditCard>))]
+        [ProducesResponseType(200, Type = typeof(ResponseItemDto<IBank>))]
         [ProducesResponseType(400, Type = typeof(string))]
         public async Task<IActionResult> DeleteItem(string id)
         {
@@ -85,7 +85,7 @@ namespace AppWebApi.Controllers
 
                 _logger.LogInformation($"{nameof(DeleteItem)}: {nameof(idArg)}: {idArg}");
                 
-                var item = await _service.DeleteCreditCardAsync(idArg);
+                var item = await _service.DeleteBankAsync(idArg);
                 if (item?.Item == null) throw new ArgumentException ($"Item with id {id} does not exist");
         
                 _logger.LogInformation($"item {idArg} deleted");
@@ -99,7 +99,7 @@ namespace AppWebApi.Controllers
         }
 
         [HttpGet()]
-        [ProducesResponseType(200, Type = typeof(ResponseItemDto<CreditCardCuDto>))]
+        [ProducesResponseType(200, Type = typeof(ResponseItemDto<BankCuDto>))]
         [ProducesResponseType(400, Type = typeof(string))]
         [ProducesResponseType(404, Type = typeof(string))]
         public async Task<IActionResult> ReadItemDto(string id = null)
@@ -110,13 +110,13 @@ namespace AppWebApi.Controllers
 
                 _logger.LogInformation($"{nameof(ReadItemDto)}: {nameof(idArg)}: {idArg}");
 
-                var item = await _service.ReadCreditCardAsync(idArg, false);
+                var item = await _service.ReadBanksAsync(idArg, false);
                 if (item?.Item == null) throw new ArgumentException ($"Item with id {id} does not exist");
 
                 return Ok(
-                    new ResponseItemDto<CreditCardCuDto>() {
+                    new ResponseItemDto<BankCuDto>() {
                     DbConnectionKeyUsed = item.DbConnectionKeyUsed,
-                    Item = new CreditCardCuDto(item.Item)
+                    Item = new BankCuDto(item.Item)
                 });   
             }
             catch (Exception ex)
@@ -127,16 +127,16 @@ namespace AppWebApi.Controllers
         }
 
         [HttpPost()]
-        [ProducesResponseType(200, Type = typeof(ResponseItemDto<ICreditCard>))]
+        [ProducesResponseType(200, Type = typeof(ResponseItemDto<IBank>))]
         [ProducesResponseType(400, Type = typeof(string))]
-        public async Task<IActionResult> CreateItem([FromBody] CreditCardCuDto item)
+        public async Task<IActionResult> CreateItem([FromBody] BankCuDto item)
         {
             try
             {
                 _logger.LogInformation($"{nameof(CreateItem)}:");
                 
-                var model = await _service.CreateCreditCardAsync(item);
-                _logger.LogInformation($"item {model.Item.CreditCardId} created");
+                var model = await _service.CreateBankAsync(item);
+                _logger.LogInformation($"item {model.Item.BankId} created");
 
                 return Ok(model);
             }
@@ -148,31 +148,31 @@ namespace AppWebApi.Controllers
         }
 
         [HttpGet()]
-        [ProducesResponseType(200, Type = typeof(ResponsePageDto<IEmployee>))]
+        [ProducesResponseType(200, Type = typeof(ResponsePageDto<IAttractionModel>))]
         [ProducesResponseType(400, Type = typeof(string))]
-        public async Task<IActionResult> ReadEmployeesWithCC(string hasCreditcard = "true", string pageNr = "0", string pageSize = "10")
+        public async Task<IActionResult> ReadAttractionWithCC(string hasBank = "true", string pageNr = "0", string pageSize = "10")
         {
             try
             {
-                bool hasCreditcardArg = bool.Parse(hasCreditcard);
+                bool hasBankArg = bool.Parse(hasBank);
                 int pageNrArg = int.Parse(pageNr);
                 int pageSizeArg = int.Parse(pageSize);
 
-                _logger.LogInformation($"{nameof(ReadEmployeesWithCC)}: {nameof(hasCreditcardArg)}: {hasCreditcardArg}, " +
+                _logger.LogInformation($"{nameof(ReadAttractionWithCC)}: {nameof(hasBankArg)}: {hasBankArg}, " +
                     $"{nameof(pageNrArg)}: {pageNrArg}, {nameof(pageSizeArg)}: {pageSizeArg}");
                 
-                var resp = await _service.ReadEmployeesWithCCAsync(hasCreditcardArg, pageNrArg, pageSizeArg);     
+                var resp = await _service.ReadAttractionsWithCCAsync(hasBankArg, pageNrArg, pageSizeArg);     
                 return Ok(resp);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"{nameof(ReadEmployeesWithCC)}: {ex.Message}.{ex.InnerException?.Message}");
+                _logger.LogError($"{nameof(ReadAttractionWithCC)}: {ex.Message}.{ex.InnerException?.Message}");
                 return BadRequest($"{ex.Message}.{ex.InnerException?.Message}");
             }
         }
 
         [HttpGet()]
-        [ProducesResponseType(200, Type = typeof(ResponseItemDto<ICreditCard>))]
+        [ProducesResponseType(200, Type = typeof(ResponseItemDto<IBank>))]
         [ProducesResponseType(400, Type = typeof(string))]
         [ProducesResponseType(404, Type = typeof(string))]
         public async Task<IActionResult> ReadClearCC(string id = null)

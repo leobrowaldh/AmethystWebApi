@@ -44,6 +44,14 @@ namespace DbContext.Migrations.SqlServerDbContext
                     b.Property<int>("ZipCode")
                         .HasColumnType("int");
 
+                    b.Property<string>("strCity")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("strCountry")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)");
+
                     b.HasKey("AddressId");
 
                     b.ToTable("Addresses", "supusr");
@@ -80,6 +88,44 @@ namespace DbContext.Migrations.SqlServerDbContext
                     b.HasIndex("AddressDbMAddressId");
 
                     b.ToTable("Attractions", "supusr");
+                });
+
+            modelBuilder.Entity("DbModels.BankDbM", b =>
+                {
+                    b.Property<Guid>("BankId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AttractionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("BankComment")
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("BankNumber")
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("Banks")
+                        .HasColumnType("int");
+
+                    b.Property<string>("EnryptedToken")
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("RiskLevel")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Seeded")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("strIssuer")
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("BankId");
+
+                    b.HasIndex("AttractionId")
+                        .IsUnique();
+
+                    b.ToTable("CreditCards", "supusr");
                 });
 
             modelBuilder.Entity("DbModels.CommentDbM", b =>
@@ -122,9 +168,50 @@ namespace DbContext.Migrations.SqlServerDbContext
                     b.ToTable("Comments", "supusr");
                 });
 
+            modelBuilder.Entity("DbModels.UserDbM", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserEmail")
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("UserPassword")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("UserRole")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("Users", "dbo");
+                });
+
             modelBuilder.Entity("Models.DTO.GstUsrInfoDbDto", b =>
                 {
-                    b.Property<int>("NrGroups")
+                    b.Property<int>("NrSeededAddresses")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NrSeededAttractions")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NrSeededComments")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NrUnseededAddresses")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NrUnseededAttractions")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NrUnseededComments")
                         .HasColumnType("int");
 
                     b.ToTable((string)null);
@@ -135,10 +222,21 @@ namespace DbContext.Migrations.SqlServerDbContext
             modelBuilder.Entity("DbModels.AttractionModelDbM", b =>
                 {
                     b.HasOne("DbModels.AddressDbM", "AddressDbM")
-                        .WithMany("AttractionModelDbMs")
+                        .WithMany("AttractionModelDbM")
                         .HasForeignKey("AddressDbMAddressId");
 
                     b.Navigation("AddressDbM");
+                });
+
+            modelBuilder.Entity("DbModels.BankDbM", b =>
+                {
+                    b.HasOne("DbModels.AttractionModelDbM", "AttractionModelDbM")
+                        .WithOne("BankDbM")
+                        .HasForeignKey("DbModels.BankDbM", "AttractionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AttractionModelDbM");
                 });
 
             modelBuilder.Entity("DbModels.CommentDbM", b =>
@@ -154,11 +252,13 @@ namespace DbContext.Migrations.SqlServerDbContext
 
             modelBuilder.Entity("DbModels.AddressDbM", b =>
                 {
-                    b.Navigation("AttractionModelDbMs");
+                    b.Navigation("AttractionModelDbM");
                 });
 
             modelBuilder.Entity("DbModels.AttractionModelDbM", b =>
                 {
+                    b.Navigation("BankDbM");
+
                     b.Navigation("CommentsDbM");
                 });
 #pragma warning restore 612, 618

@@ -24,42 +24,43 @@ public class BankDbM : Bank, ISeed<Bank>
     //In a one-to-one relationship, you needed to establish that the Foreign Key should in this table, CreditCards
     //Connecting below FK above with EmployeeDbM.EmployeeId
     [JsonIgnore]
-    public virtual Guid EmployeeId { get; set; }
+    public virtual Guid AttractionId { get; set; }
 
     [NotMapped]
-    public override IEmployee Employee { get => EmployeeDbM; set => throw new NotImplementedException(); }
+    public override IAttractionModel AttractionModel { get => AttractionModelDbM; set => throw new NotImplementedException(); }
 
     [JsonIgnore]
     [Required]
-    [ForeignKey ("EmployeeId")] //Connecting FK above with EmployeeDbM.EmployeeId
-    public  EmployeeDbM  EmployeeDbM { get; set; } = null;
+    [ForeignKey ("AttractionId")] //Connecting FK above with EmployeeDbM.EmployeeId
+    public AttractionModelDbM   AttractionModelDbM { get; set; } = null;
 
 
-    public override CreditCardDbM Seed (SeedGenerator _seeder)
+    public override BankDbM Seed (csSeedGenerator _seeder)
     {
         base.Seed (_seeder);
         return this;
     }
 
-    public CreditCardDbM UpdateFromDTO(CreditCardCuDto org)
+    public BankDbM UpdateFromDTO(BankCuDto org)
     {
         if (org == null) return null;
 
-        Issuer = org.Issuer;
-        FirstName = org.FirstName;
-        LastName = org.LastName;
-        Number = org.Number;
+        Banks = org.Banks;
+        BankNumber = org.BankNumber;
+     
+        RiskLevel = org.RiskLevel;
+        BankComment = org.BankComment;
 
-        ExpirationYear = org.ExpirationYear;
-        ExpirationMonth = org.ExpirationMonth;
+
+       
 
         return this;
     }
 
-    public CreditCardDbM() { }
-    public CreditCardDbM(CreditCardCuDto org)
+    public BankDbM() { }
+    public BankDbM(BankCuDto org)
     {
-        CreditCardId = Guid.NewGuid();
+        BankId = Guid.NewGuid();
         UpdateFromDTO(org);
     }
 }

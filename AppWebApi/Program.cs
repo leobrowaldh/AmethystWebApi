@@ -33,7 +33,7 @@ builder.Services.AddScoped<LoginDbRepos>();
 builder.Services.AddScoped<IAdminService, AdminServiceDb>();
 builder.Services.AddScoped<IAttractionService, AttractionServiceDb>();
 builder.Services.AddScoped<ICommentService, CommentServiceDb>();
-builder.Services.AddScoped<CreditCardDbRepos>();
+builder.Services.AddScoped<BankDbRepos>();
 // builder.Services.AddScoped<IAddressService, AddressServiceDb>();
 builder.Services.AddScoped<ILoginService, LoginServiceDb>();
 

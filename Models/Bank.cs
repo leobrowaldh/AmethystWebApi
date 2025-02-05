@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace Models;
 
-public class Bank : IBanks, ISeed<Bank>
+public class Bank : IBank, ISeed<Bank>
 {
     public virtual Guid BankId { get; set; }
 

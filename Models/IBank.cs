@@ -4,7 +4,7 @@ public enum enBank {xxxxx, Nordea, Swedbank, SBAB, DanskeBank}
 
 public enum enRiskLevel {xxxxxx, Low, Medium, High}
 
-public interface IBanks
+public interface IBank
 {
     public Guid BankId { get; set; }
 

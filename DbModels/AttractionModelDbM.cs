@@ -33,6 +33,10 @@ public class AttractionModelDbM : AttractionModel, ISeed<AttractionModelDbM>
     public override IAddress Address { get => AddressDbM; set => throw new NotImplementedException(); }
     [JsonIgnore]
     public AddressDbM AddressDbM { get; set; }
+    [NotMapped]
+    public override IBank Bank { get => BankDbM; set => throw new NotImplementedException(); }
+    [JsonIgnore]
+    public BankDbM BankDbM { get;set;}
 
     public override AttractionModelDbM Seed (csSeedGenerator _seeder)
     {
