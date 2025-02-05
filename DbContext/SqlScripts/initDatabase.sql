@@ -13,9 +13,32 @@ GO
 --02-create-gstusr-view.sql
 --create a view that gives overview of the database content
 CREATE OR ALTER VIEW gstusr.vwInfoDb AS
-    SELECT COUNT(*) as NrGroups FROM supusr.Attractions;
+    SELECT 'Guest user database overview' as Title,
+    (SELECT COUNT(*) FROM supusr.Attractions WHERE Seeded = 1) as nrSeededAttractions, 
+    (SELECT COUNT(*) FROM supusr.Attractions WHERE Seeded = 0) as nrUnseededAttractions,
+    (SELECT COUNT(*) FROM supusr.Comments WHERE Seeded = 1) as nrSeededComments, 
+    (SELECT COUNT(*) FROM supusr.Comments WHERE Seeded = 0) as nrUnseededComments,
+    (SELECT COUNT(*) FROM supusr.Addresses WHERE Seeded = 1) as nrSeededAddresses, 
+    (SELECT COUNT(*) FROM supusr.Addresses WHERE Seeded = 0) as nrUnseededAddresses
 GO
 
+CREATE OR ALTER VIEW gstusr.vwInfoAttractions AS
+    SELECT a.strCategory, COUNT(*) as NrAttractions  FROM supusr.Attractions a
+    GROUP BY a.strCategory WITH ROLLUP;
+GO
+
+CREATE OR ALTER VIEW gstusr.vwInfoComments AS
+    SELECT c.strType, z.City, z.Name as ZooName, COUNT(a.AnimalId) as NrAnimals FROM supusr.Zoos z
+    INNER JOIN supusr.Animals a ON a.ZooDbMZooId = z.ZooId
+    GROUP BY z.Country, z.City, z.Name WITH ROLLUP;
+GO
+
+CREATE OR ALTER VIEW gstusr.vwInfoEmployees AS
+    SELECT z.Country, z.City, z.Name as ZooName, COUNT(e.EmployeeId) as NrEmployees FROM supusr.Zoos z
+    INNER JOIN supusr.EmployeeDbMZooDbM ct ON ct.ZoosDbMZooId = z.ZooId
+    INNER JOIN supusr.Employees e ON e.EmployeeId = ct.EmployeesDbMEmployeeId
+    GROUP BY z.Country, z.City, z.Name WITH ROLLUP;
+GO
 
 --03-create-supusr-sp.sql
 CREATE OR ALTER PROC supusr.spDeleteAll
