@@ -27,7 +27,7 @@ public interface IAttractionService {
    public Task<ResponseItemDto<IBank>> ReadBanksAsync(Guid id, bool flat);
    public Task<ResponseItemDto<IBank>> DeleteBankAsync(Guid id);
    public Task<ResponseItemDto<IBank>> CreateBankAsync(BankCuDto item);
-     public Task<ResponsePageDto<IAttractionModel>> ReadAttractionsWithCCAsync(bool hasbank, int pageNumber, int pageSize);
+     public Task<ResponsePageDto<IAttraction>> ReadAttractionsWithCCAsync(bool hasbank, int pageNumber, int pageSize);
     public Task<ResponseItemDto<IBank>> ReadDecryptedCCAsync(Guid id);
 
 

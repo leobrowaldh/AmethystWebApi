@@ -148,7 +148,7 @@ namespace AppWebApi.Controllers
         }
 
         [HttpGet()]
-        [ProducesResponseType(200, Type = typeof(ResponsePageDto<IAttractionModel>))]
+        [ProducesResponseType(200, Type = typeof(ResponsePageDto<IAttraction>))]
         [ProducesResponseType(400, Type = typeof(string))]
         public async Task<IActionResult> ReadAttractionWithCC(string hasBank = "true", string pageNr = "0", string pageSize = "10")
         {

@@ -77,6 +77,33 @@ namespace DbContext.Migrations.SqlServerDbContext
                 });
 
             migrationBuilder.CreateTable(
+                name: "Banks",
+                schema: "supusr",
+                columns: table => new
+                {
+                    BankId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    strIssuer = table.Column<string>(type: "nvarchar(200)", nullable: true),
+                    AttractionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Banks = table.Column<int>(type: "int", nullable: false),
+                    BankNumber = table.Column<string>(type: "nvarchar(200)", nullable: true),
+                    RiskLevel = table.Column<int>(type: "int", nullable: false),
+                    BankComment = table.Column<string>(type: "nvarchar(200)", nullable: true),
+                    EnryptedToken = table.Column<string>(type: "nvarchar(200)", nullable: true),
+                    Seeded = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Banks", x => x.BankId);
+                    table.ForeignKey(
+                        name: "FK_Banks_Attractions_AttractionId",
+                        column: x => x.AttractionId,
+                        principalSchema: "supusr",
+                        principalTable: "Attractions",
+                        principalColumn: "AttractionId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Comments",
                 schema: "supusr",
                 columns: table => new
@@ -104,33 +131,6 @@ namespace DbContext.Migrations.SqlServerDbContext
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "CreditCards",
-                schema: "supusr",
-                columns: table => new
-                {
-                    BankId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    strIssuer = table.Column<string>(type: "nvarchar(200)", nullable: true),
-                    AttractionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Banks = table.Column<int>(type: "int", nullable: false),
-                    BankNumber = table.Column<string>(type: "nvarchar(200)", nullable: true),
-                    RiskLevel = table.Column<int>(type: "int", nullable: false),
-                    BankComment = table.Column<string>(type: "nvarchar(200)", nullable: true),
-                    EnryptedToken = table.Column<string>(type: "nvarchar(200)", nullable: true),
-                    Seeded = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CreditCards", x => x.BankId);
-                    table.ForeignKey(
-                        name: "FK_CreditCards_Attractions_AttractionId",
-                        column: x => x.AttractionId,
-                        principalSchema: "supusr",
-                        principalTable: "Attractions",
-                        principalColumn: "AttractionId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Attractions_AddressDbMAddressId",
                 schema: "supusr",
@@ -138,28 +138,28 @@ namespace DbContext.Migrations.SqlServerDbContext
                 column: "AddressDbMAddressId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Banks_AttractionId",
+                schema: "supusr",
+                table: "Banks",
+                column: "AttractionId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Comments_AttractionModelDbMAttractionId",
                 schema: "supusr",
                 table: "Comments",
                 column: "AttractionModelDbMAttractionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CreditCards_AttractionId",
-                schema: "supusr",
-                table: "CreditCards",
-                column: "AttractionId",
-                unique: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Comments",
+                name: "Banks",
                 schema: "supusr");
 
             migrationBuilder.DropTable(
-                name: "CreditCards",
+                name: "Comments",
                 schema: "supusr");
 
             migrationBuilder.DropTable(

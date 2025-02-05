@@ -30,6 +30,7 @@ builder.Services.AddScoped<AttractionDbRepos>();
 builder.Services.AddScoped<CommentDbRepos>();
 builder.Services.AddScoped<LoginDbRepos>();
 builder.Services.AddScoped<AddressDbRepos>();
+builder.Services.AddScoped<BankDbRepos>();
 builder.Services.AddScoped<IAdminService, AdminServiceDb>();
 builder.Services.AddScoped<IAttractionService, AttractionServiceDb>();
 builder.Services.AddScoped<ILoginService, LoginServiceDb>();

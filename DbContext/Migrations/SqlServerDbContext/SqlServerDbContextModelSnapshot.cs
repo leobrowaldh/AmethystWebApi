@@ -57,7 +57,7 @@ namespace DbContext.Migrations.SqlServerDbContext
                     b.ToTable("Addresses", "supusr");
                 });
 
-            modelBuilder.Entity("DbModels.AttractionModelDbM", b =>
+            modelBuilder.Entity("DbModels.AttractionDbM", b =>
                 {
                     b.Property<Guid>("AttractionId")
                         .ValueGeneratedOnAdd()
@@ -125,7 +125,7 @@ namespace DbContext.Migrations.SqlServerDbContext
                     b.HasIndex("AttractionId")
                         .IsUnique();
 
-                    b.ToTable("CreditCards", "supusr");
+                    b.ToTable("Banks", "supusr");
                 });
 
             modelBuilder.Entity("DbModels.CommentDbM", b =>
@@ -219,7 +219,7 @@ namespace DbContext.Migrations.SqlServerDbContext
                     b.ToView("vwInfoDb", "gstusr");
                 });
 
-            modelBuilder.Entity("DbModels.AttractionModelDbM", b =>
+            modelBuilder.Entity("DbModels.AttractionDbM", b =>
                 {
                     b.HasOne("DbModels.AddressDbM", "AddressDbM")
                         .WithMany("AttractionModelDbM")
@@ -230,18 +230,18 @@ namespace DbContext.Migrations.SqlServerDbContext
 
             modelBuilder.Entity("DbModels.BankDbM", b =>
                 {
-                    b.HasOne("DbModels.AttractionModelDbM", "AttractionModelDbM")
+                    b.HasOne("DbModels.AttractionDbM", "AttractionDbM")
                         .WithOne("BankDbM")
                         .HasForeignKey("DbModels.BankDbM", "AttractionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("AttractionModelDbM");
+                    b.Navigation("AttractionDbM");
                 });
 
             modelBuilder.Entity("DbModels.CommentDbM", b =>
                 {
-                    b.HasOne("DbModels.AttractionModelDbM", "AttractionModelDbM")
+                    b.HasOne("DbModels.AttractionDbM", "AttractionModelDbM")
                         .WithMany("CommentsDbM")
                         .HasForeignKey("AttractionModelDbMAttractionId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -255,7 +255,7 @@ namespace DbContext.Migrations.SqlServerDbContext
                     b.Navigation("AttractionModelDbM");
                 });
 
-            modelBuilder.Entity("DbModels.AttractionModelDbM", b =>
+            modelBuilder.Entity("DbModels.AttractionDbM", b =>
                 {
                     b.Navigation("BankDbM");
 

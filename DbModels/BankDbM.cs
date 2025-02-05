@@ -7,7 +7,7 @@ using Seido.Utilities.SeedGenerator;
 using Models.DTO;
 
 namespace DbModels;
-[Table("CreditCards", Schema = "supusr")]
+[Table("Banks", Schema = "supusr")]
 public class BankDbM : Bank, ISeed<Bank>
 {
     [Key]
@@ -27,12 +27,12 @@ public class BankDbM : Bank, ISeed<Bank>
     public virtual Guid AttractionId { get; set; }
 
     [NotMapped]
-    public override IAttractionModel AttractionModel { get => AttractionModelDbM; set => throw new NotImplementedException(); }
+    public override IAttraction Attraction { get => AttractionDbM; set => throw new NotImplementedException(); }
 
     [JsonIgnore]
     [Required]
     [ForeignKey ("AttractionId")] //Connecting FK above with EmployeeDbM.EmployeeId
-    public AttractionModelDbM   AttractionModelDbM { get; set; } = null;
+    public AttractionDbM   AttractionDbM { get; set; } = null;
 
 
     public override BankDbM Seed (csSeedGenerator _seeder)

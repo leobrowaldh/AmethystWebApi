@@ -13,11 +13,11 @@ namespace Models.DTO;
 public class BankCuDto
 {
     public Guid? BankId { get; set; }
-    public enBank Banks { get; set; }
+    public EnBank Banks { get; set; }
 
    
      public string BankNumber { get; set; }
-      public enRiskLevel  RiskLevel { get; set; }
+      public EnRiskLevel  RiskLevel { get; set; }
     public string BankComment {get; set; }
     //Navigation properties
     public Guid AttractionId { get; set; }
@@ -34,6 +34,6 @@ public class BankCuDto
         BankComment = org.BankComment;
         RiskLevel = org.RiskLevel;
 
-        AttractionId = org.AttractionModel.AttractionId;
+        AttractionId = org.Attraction.AttractionId;
     }
 }

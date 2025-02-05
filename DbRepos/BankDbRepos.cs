@@ -31,7 +31,7 @@ public class BankDbRepos
         if (!flat)
         {
             query = _dbContext.Banks.AsNoTracking()
-                .Include(i => i.AttractionModelDbM)
+                .Include(i => i.AttractionDbM)
                 .Where(i => i.BankId == id);
         }
         else
@@ -60,7 +60,7 @@ public class BankDbRepos
         else
         {
             query = _dbContext.Banks.AsNoTracking()
-                .Include(i => i.AttractionModelDbM);
+                .Include(i => i.AttractionDbM);
                 
         }
 
@@ -151,16 +151,16 @@ public class BankDbRepos
         if (employee == null)
             throw new ArgumentException($"Item id {itemDtoSrc.AttractionId} not existing");
 
-        itemDst.AttractionModelDbM = employee;
+        itemDst.AttractionDbM = employee;
     }
 
     //Special Non-CRUD repo
-    public async Task<ResponsePageDto<IAttractionModel>> ReadAttractionsWithCCAsync(bool hasBank, int pageNumber, int pageSize)
+    public async Task<ResponsePageDto<IAttraction>> ReadAttractionsWithCCAsync(bool hasBank, int pageNumber, int pageSize)
     {
         var query = _dbContext.Attractions.AsNoTracking()
             .Include(i => i.BankDbM);
 
-        var ret = new ResponsePageDto<IAttractionModel>()
+        var ret = new ResponsePageDto<IAttraction>()
         {
             DbConnectionKeyUsed = _dbContext.dbConnection,
             DbItemsCount = await query
@@ -177,7 +177,7 @@ public class BankDbRepos
                 .Skip(pageNumber * pageSize)
                 .Take(pageSize)
 
-                .ToListAsync<IAttractionModel>(),
+                .ToListAsync<IAttraction>(),
 
             PageNr = pageNumber,
             PageSize = pageSize
@@ -188,14 +188,14 @@ public class BankDbRepos
     public async Task<ResponseItemDto<IBank>> ReadDecryptedCCAsync(Guid id)
     {
         IQueryable<BankDbM> query = _dbContext.Banks.AsNoTracking()
-                .Include(i => i.AttractionModelDbM)
+                .Include(i => i.AttractionDbM)
                 .Where(i => i.BankId == id);
 
         var resp = await query.FirstOrDefaultAsync<Bank>();
         var cc = resp.Decrypt(_encryptions.AesDecryptFromBase64<Bank>);
 
         //Nav props are not set in the decrypted object, set them
-        cc.AttractionModel = resp.AttractionModel;
+        cc.Attraction = resp.Attraction;
 
         return new ResponseItemDto<IBank>()
         {

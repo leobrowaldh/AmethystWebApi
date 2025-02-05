@@ -56,7 +56,7 @@ public class AttractionServiceDb : IAttractionService
 
     public Task<ResponseItemDto<IBank>> CreateBankAsync(BankCuDto item) => _bankRepo.CreateBankAsync(item);
 
-    public Task<ResponsePageDto<IAttractionModel>> ReadAttractionsWithCCAsync(bool hasbank, int pageNumber, int pageSize) => _bankRepo.ReadAttractionsWithCCAsync(hasbank, pageNumber, pageSize);
+    public Task<ResponsePageDto<IAttraction>> ReadAttractionsWithCCAsync(bool hasbank, int pageNumber, int pageSize) => _bankRepo.ReadAttractionsWithCCAsync(hasbank, pageNumber, pageSize);
 
     public Task<ResponseItemDto<IBank>> ReadDecryptedCCAsync(Guid id) => _bankRepo.ReadDecryptedCCAsync(id);
 
