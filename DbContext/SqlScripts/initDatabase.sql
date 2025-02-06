@@ -35,6 +35,12 @@ CREATE OR ALTER VIEW gstusr.vwInfoComments AS
     GROUP BY a.strCategory, a.Name WITH ROLLUP;
 GO
 
+CREATE OR ALTER VIEW gstusr.vwInfoAddresses AS
+    SELECT ad.City as CityName, COUNT(a.AttractionId) as NrAttractions FROM supusr.Attractions a
+    INNER JOIN supusr.Addresses ad ON a.AddressDbMAddressId = ad.AddressId
+    GROUP BY ad.City WITH ROLLUP;
+GO
+
 
 --03-create-supusr-sp.sql
 CREATE OR ALTER PROC supusr.spDeleteAll

@@ -13,30 +13,27 @@ public class GstUsrInfoDbDto
 
     public int NrSeededAddresses { get; set; } = 0;
     public int NrUnseededAddresses { get; set; } = 0;
+    public int NrSeededBanks { get; set; } = 0;
+    public int NrUnseededBanks { get; set; } = 0;
 }
 
 public class GstUsrInfoAttractionsDto
 {
-    public string Name { get; set; } = null;
-    public string Description { get; set; } = null;
+    public string Category { get; set; } = null;
     public int NrAttractions { get; set; } = 0;
 }
 
 public class GstUsrInfoCommentsDto
 {
-    public string CommentAge { get; set; } = null;
-    public string CommentName { get; set; } = null;
-    public string CommentText { get; set; } = null;
+    public string AttractionCategory { get; set; } = null;
+    public string AttractionName { get; set; } = null;
     public int NrComments { get; set; } = 0;
 }
 
 public class GstUsrInfoAddressesDto
 {
-    public string Country { get; set; } = null;
-    public string City { get; set; } = null;
-    public string StreetName { get; set; } = null;
-    public int ZipCode { get; set; } = 0;
-    public int NrAddresses { get; set; } = 0;
+    public string CityName { get; set; } = null;
+    public int NrAttractions { get; set; } = 0;
 }
 
 public class GstUsrInfoAllDto

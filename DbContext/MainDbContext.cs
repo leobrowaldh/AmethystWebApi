@@ -33,6 +33,9 @@ public class MainDbContext : Microsoft.EntityFrameworkCore.DbContext
 
     #region model the Views
     public DbSet<GstUsrInfoDbDto> InfoDbView { get; set; }
+    public DbSet<GstUsrInfoAttractionsDto> InfoAttractionsView { get; set; }
+    public DbSet<GstUsrInfoCommentsDto> InfoCommentsView { get; set; }
+    public DbSet<GstUsrInfoAddressesDto> InfoAddressesView { get; set; }
     #endregion
 
     #region constructors
@@ -50,10 +53,11 @@ public class MainDbContext : Microsoft.EntityFrameworkCore.DbContext
 
         #region model the Views
         modelBuilder.Entity<GstUsrInfoDbDto>().ToView("vwInfoDb", "gstusr").HasNoKey();
+        modelBuilder.Entity<GstUsrInfoAttractionsDto>().ToView("vwInfoAttractions", "gstusr").HasNoKey();
+        modelBuilder.Entity<GstUsrInfoCommentsDto>().ToView("vwInfoComments", "gstusr").HasNoKey();
+        modelBuilder.Entity<GstUsrInfoAddressesDto>().ToView("vwInfoAddresses", "gstusr").HasNoKey();
         #endregion
 
-        #region override modelbuilder
-        #endregion
         
         base.OnModelCreating(modelBuilder);
     }
