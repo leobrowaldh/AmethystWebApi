@@ -170,13 +170,13 @@ public class CommentDbRepos
 
     private async Task navProp_ItemCUdto_to_ItemDbM(CommentCuDto itemDtoSrc, CommentDbM itemDst)
     {
-        //update zoo nav props
-        var zoo = await _dbContext.Attractions.FirstOrDefaultAsync(
+        //update comment nav props
+        var attraction = await _dbContext.Attractions.FirstOrDefaultAsync(
             a => (a.AttractionId == itemDtoSrc.AttractionId));
 
-        if (zoo == null)
+        if (attraction == null)
             throw new ArgumentException($"Item id {itemDtoSrc.AttractionId} not existing");
 
-        itemDst.AttractionModelDbM = zoo;
+        itemDst.AttractionModelDbM = attraction;
     }
 }
