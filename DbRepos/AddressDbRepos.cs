@@ -28,7 +28,7 @@ public class AddressDbRepos
         if (!flat)
         {
             query = _dbContext.Addresses.AsNoTracking()
-                .Include(i => i.AttractionModelDbM) // Double check if it should connect this way.
+                .Include(i => i.AttractionDbM) // Double check if it should connect this way.
                 .Where(i => i.AddressId == id);
         }
         else
@@ -56,7 +56,7 @@ public class AddressDbRepos
         else
         {
             query = _dbContext.Addresses.AsNoTracking()
-                .Include(i => i.AttractionModelDbM);
+                .Include(i => i.AttractionDbM);
         }
 
         var ret = new ResponsePageDto<IAddress>()
@@ -120,7 +120,7 @@ public class AddressDbRepos
         var query1 = _dbContext.Addresses
             .Where(i => i.AddressId == itemDto.AddressId);
         var item = await query1
-                .Include(i => i.AttractionModelDbM)
+                .Include(i => i.AttractionDbM)
                 .FirstOrDefaultAsync<AddressDbM>();
 
         //If the item does not exists
@@ -182,6 +182,6 @@ public class AddressDbRepos
             }
         }
 
-        itemDst.AttractionModelDbM = attractions;
+        itemDst.AttractionDbM = attractions;
     }
 }

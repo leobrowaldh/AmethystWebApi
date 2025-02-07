@@ -13,7 +13,7 @@ public class Address:IAddress, ISeed<Address>
     public virtual string StreetName { get; set; }
     public int ZipCode { get; set; }
 
-    public virtual List<IAttraction> AttractionModels { get; set; }
+    public virtual List<IAttraction> Attractions { get; set; }
 
     public bool Seeded { get; set; } = false;
 

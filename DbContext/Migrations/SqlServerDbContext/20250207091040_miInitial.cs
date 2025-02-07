@@ -111,7 +111,7 @@ namespace DbContext.Migrations.SqlServerDbContext
                     CommentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     strType = table.Column<string>(type: "nvarchar(200)", nullable: true),
                     strRating = table.Column<string>(type: "nvarchar(200)", nullable: true),
-                    AttractionModelDbMAttractionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AttractionDbMAttractionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
                     Rating = table.Column<int>(type: "int", nullable: false),
                     CommentAge = table.Column<int>(type: "int", nullable: false),
@@ -123,8 +123,8 @@ namespace DbContext.Migrations.SqlServerDbContext
                 {
                     table.PrimaryKey("PK_Comments", x => x.CommentId);
                     table.ForeignKey(
-                        name: "FK_Comments_Attractions_AttractionModelDbMAttractionId",
-                        column: x => x.AttractionModelDbMAttractionId,
+                        name: "FK_Comments_Attractions_AttractionDbMAttractionId",
+                        column: x => x.AttractionDbMAttractionId,
                         principalSchema: "supusr",
                         principalTable: "Attractions",
                         principalColumn: "AttractionId",
@@ -145,10 +145,10 @@ namespace DbContext.Migrations.SqlServerDbContext
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_AttractionModelDbMAttractionId",
+                name: "IX_Comments_AttractionDbMAttractionId",
                 schema: "supusr",
                 table: "Comments",
-                column: "AttractionModelDbMAttractionId");
+                column: "AttractionDbMAttractionId");
         }
 
         /// <inheritdoc />

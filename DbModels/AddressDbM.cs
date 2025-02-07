@@ -29,9 +29,9 @@ public class AddressDbM:Address, ISeed<AddressDbM>
     public override string StreetName { get; set; }
 
     [NotMapped]
-    public override List<IAttraction> AttractionModels { get; set; }
+    public override List<IAttraction> Attractions { get; set; }
     [JsonIgnore]
-    public List<AttractionDbM> AttractionModelDbM { get; set; }
+    public List<AttractionDbM> AttractionDbM { get; set; }
 
     public override AddressDbM Seed (csSeedGenerator _seeder)
     {

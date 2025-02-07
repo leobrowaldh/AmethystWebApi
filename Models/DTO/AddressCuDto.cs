@@ -31,6 +31,6 @@ public class AddressCuDto
         StreetName = org.StreetName;
         ZipCode = org.ZipCode;
 
-        AttractionIds = org?.AttractionModels?.Select(a => a.AttractionId).ToList();
+        AttractionIds = org?.Attractions?.Select(a => a.AttractionId).ToList();
     }
 }

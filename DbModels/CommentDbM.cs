@@ -28,11 +28,11 @@ public class CommentDbM : Comment, ISeed<CommentDbM>
     #endregion
     
     [NotMapped]
-    public override IAttraction AttractionModel { get => AttractionModelDbM; set => throw new NotImplementedException(); }
+    public override IAttraction Attraction { get => AttractionDbM; set => throw new NotImplementedException(); }
 
     [JsonIgnore]
     [Required]
-    public  AttractionDbM AttractionModelDbM { get; set; }
+    public  AttractionDbM AttractionDbM { get; set; }
 
     public override CommentDbM Seed (csSeedGenerator _seeder)
     {

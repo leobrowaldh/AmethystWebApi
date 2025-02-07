@@ -28,7 +28,7 @@ public class CommentDbRepos
         if (!flat)
         {
             query = _dbContext.Comments.AsNoTracking()
-                .Include(i => i.AttractionModelDbM)
+                .Include(i => i.AttractionDbM)
                 .Where(i => i.CommentId == id);
         }
         else
@@ -57,7 +57,7 @@ public class CommentDbRepos
         else
         {
             query = _dbContext.Comments.AsNoTracking()
-                .Include(i => i.AttractionModelDbM);
+                .Include(i => i.AttractionDbM);
         }
 
         var ret = new ResponsePageDto<IComment>()
@@ -123,7 +123,7 @@ public class CommentDbRepos
         var query1 = _dbContext.Comments
             .Where(i => i.CommentId == itemDto.CommentId);
         var item = await query1
-                .Include(i => i.AttractionModelDbM)
+                .Include(i => i.AttractionDbM)
                 .FirstOrDefaultAsync<CommentDbM>();
 
         //If the item does not exists
@@ -177,6 +177,6 @@ public class CommentDbRepos
         if (attraction == null)
             throw new ArgumentException($"Item id {itemDtoSrc.AttractionId} not existing");
 
-        itemDst.AttractionModelDbM = attraction;
+        itemDst.AttractionDbM = attraction;
     }
 }

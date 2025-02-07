@@ -33,6 +33,6 @@ public class CommentCuDto
         CommentName = org.CommentName;
         CommentText = org.CommentText;
 
-        AttractionId = org?.AttractionModel?.AttractionId;
+        AttractionId = org?.Attraction?.AttractionId;
     }
 }

@@ -14,7 +14,7 @@ public class Comment:IComment, ISeed<Comment>
     public string CommentName { get; set; }
     public string CommentText { get; set; }
 
-    public virtual IAttraction AttractionModel { get; set; }
+    public virtual IAttraction Attraction { get; set; }
 
     public bool Seeded { get; set; } = false;
 

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DbContext.Migrations.SqlServerDbContext
 {
     [DbContext(typeof(MainDbContext.SqlServerDbContext))]
-    [Migration("20250205140323_miInitial")]
+    [Migration("20250207091040_miInitial")]
     partial class miInitial
     {
         /// <inheritdoc />
@@ -137,7 +137,7 @@ namespace DbContext.Migrations.SqlServerDbContext
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AttractionModelDbMAttractionId")
+                    b.Property<Guid>("AttractionDbMAttractionId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("CommentAge")
@@ -166,7 +166,7 @@ namespace DbContext.Migrations.SqlServerDbContext
 
                     b.HasKey("CommentId");
 
-                    b.HasIndex("AttractionModelDbMAttractionId");
+                    b.HasIndex("AttractionDbMAttractionId");
 
                     b.ToTable("Comments", "supusr");
                 });
@@ -197,12 +197,57 @@ namespace DbContext.Migrations.SqlServerDbContext
                     b.ToTable("Users", "dbo");
                 });
 
+            modelBuilder.Entity("Models.DTO.GstUsrInfoAddressesDto", b =>
+                {
+                    b.Property<string>("CityName")
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("NrAttractions")
+                        .HasColumnType("int");
+
+                    b.ToTable((string)null);
+
+                    b.ToView("vwInfoAddresses", "gstusr");
+                });
+
+            modelBuilder.Entity("Models.DTO.GstUsrInfoAttractionsDto", b =>
+                {
+                    b.Property<string>("Category")
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("NrAttractions")
+                        .HasColumnType("int");
+
+                    b.ToTable((string)null);
+
+                    b.ToView("vwInfoAttractions", "gstusr");
+                });
+
+            modelBuilder.Entity("Models.DTO.GstUsrInfoCommentsDto", b =>
+                {
+                    b.Property<string>("AttractionCategory")
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("AttractionName")
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("NrComments")
+                        .HasColumnType("int");
+
+                    b.ToTable((string)null);
+
+                    b.ToView("vwInfoComments", "gstusr");
+                });
+
             modelBuilder.Entity("Models.DTO.GstUsrInfoDbDto", b =>
                 {
                     b.Property<int>("NrSeededAddresses")
                         .HasColumnType("int");
 
                     b.Property<int>("NrSeededAttractions")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NrSeededBanks")
                         .HasColumnType("int");
 
                     b.Property<int>("NrSeededComments")
@@ -212,6 +257,9 @@ namespace DbContext.Migrations.SqlServerDbContext
                         .HasColumnType("int");
 
                     b.Property<int>("NrUnseededAttractions")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NrUnseededBanks")
                         .HasColumnType("int");
 
                     b.Property<int>("NrUnseededComments")
@@ -225,7 +273,7 @@ namespace DbContext.Migrations.SqlServerDbContext
             modelBuilder.Entity("DbModels.AttractionDbM", b =>
                 {
                     b.HasOne("DbModels.AddressDbM", "AddressDbM")
-                        .WithMany("AttractionModelDbM")
+                        .WithMany("AttractionDbM")
                         .HasForeignKey("AddressDbMAddressId");
 
                     b.Navigation("AddressDbM");
@@ -244,18 +292,18 @@ namespace DbContext.Migrations.SqlServerDbContext
 
             modelBuilder.Entity("DbModels.CommentDbM", b =>
                 {
-                    b.HasOne("DbModels.AttractionDbM", "AttractionModelDbM")
+                    b.HasOne("DbModels.AttractionDbM", "AttractionDbM")
                         .WithMany("CommentsDbM")
-                        .HasForeignKey("AttractionModelDbMAttractionId")
+                        .HasForeignKey("AttractionDbMAttractionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("AttractionModelDbM");
+                    b.Navigation("AttractionDbM");
                 });
 
             modelBuilder.Entity("DbModels.AddressDbM", b =>
                 {
-                    b.Navigation("AttractionModelDbM");
+                    b.Navigation("AttractionDbM");
                 });
 
             modelBuilder.Entity("DbModels.AttractionDbM", b =>
