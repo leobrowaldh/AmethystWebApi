@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
 using Models;
 using Models.DTO;
 using Services;
@@ -8,8 +9,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AppWebApi.Controllers;
-[ApiController]
-[Route("[controller]")]
+  [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
+        Policy = null, Roles = "usr, supusr, sysadmin")]
+    [ApiController]
+    [Route("api/[controller]/[action]")]
 public class AddressController : ControllerBase
 {
     private readonly IAttractionService _attractionService;
@@ -42,8 +45,11 @@ public class AddressController : ControllerBase
         }
     }
 
-    [HttpGet("{id}")]
-    [ProducesResponseType(200, Type = typeof(IAddress))]
+        [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
+            Policy = null, Roles = "supusr, sysadmin")]
+        [HttpPut("{id}")]
+        [ProducesResponseType(200, Type = typeof(ResponseItemDto<IAddress>))]
+        [ProducesResponseType(400, Type = typeof(string))]
     public async Task<IActionResult> ReadItem(string id = null, bool flat = false)
     {
         try
@@ -61,10 +67,11 @@ public class AddressController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
-
-    [HttpDelete("{id}")]
-    [ProducesResponseType(200, Type = typeof(ResponseItemDto<IAddress>))]
-    [ProducesResponseType(400, Type = typeof(string))]
+        [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
+            Policy = null, Roles = "supusr, sysadmin")]
+        [HttpDelete("{id}")]
+        [ProducesResponseType(200, Type = typeof(ResponseItemDto<IAddress>))]
+        [ProducesResponseType(400, Type = typeof(string))]
     public async Task<IActionResult> DeleteItem(string id)
     {
         try
@@ -86,9 +93,11 @@ public class AddressController : ControllerBase
         }
     }
 
-    [HttpPut("{id}")]
-    [ProducesResponseType(200, Type = typeof(ResponseItemDto<IAddress>))]
-    [ProducesResponseType(400, Type = typeof(string))]
+        [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
+            Policy = null, Roles = "supusr, sysadmin")]
+        [HttpPut("{id}")]
+        [ProducesResponseType(200, Type = typeof(ResponseItemDto<IAddress>))]
+        [ProducesResponseType(400, Type = typeof(string))]
     public async Task<IActionResult> UpdateItem(string id, [FromBody] AddressCuDto item)
     {
         try
@@ -111,10 +120,12 @@ public class AddressController : ControllerBase
         }
     }
 
-    [HttpPost()]
-    [ProducesResponseType(200, Type = typeof(ResponseItemDto<IAddress>))]
-    [ProducesResponseType(400, Type = typeof(string))]
-    public async Task<IActionResult> CreateItem([FromBody] AddressCuDto item)
+        [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
+            Policy = null, Roles = "supusr, sysadmin")]
+        [HttpPut("{id}")]
+        [ProducesResponseType(200, Type = typeof(ResponseItemDto<IAddress>))]
+        [ProducesResponseType(400, Type = typeof(string))]   
+         public async Task<IActionResult> CreateItem([FromBody] AddressCuDto item)
     {
         try
         {
