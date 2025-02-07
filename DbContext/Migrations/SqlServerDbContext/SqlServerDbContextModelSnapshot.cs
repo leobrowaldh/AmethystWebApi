@@ -177,10 +177,6 @@ namespace DbContext.Migrations.SqlServerDbContext
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(200)");
-
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(200)");
@@ -189,9 +185,55 @@ namespace DbContext.Migrations.SqlServerDbContext
                         .IsRequired()
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)");
+
                     b.HasKey("UserId");
 
                     b.ToTable("Users", "dbo");
+                });
+
+            modelBuilder.Entity("Models.DTO.GstUsrInfoAddressesDto", b =>
+                {
+                    b.Property<string>("CityName")
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("NrAttractions")
+                        .HasColumnType("int");
+
+                    b.ToTable((string)null);
+
+                    b.ToView("vwInfoAddresses", "gstusr");
+                });
+
+            modelBuilder.Entity("Models.DTO.GstUsrInfoAttractionsDto", b =>
+                {
+                    b.Property<string>("Category")
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("NrAttractions")
+                        .HasColumnType("int");
+
+                    b.ToTable((string)null);
+
+                    b.ToView("vwInfoAttractions", "gstusr");
+                });
+
+            modelBuilder.Entity("Models.DTO.GstUsrInfoCommentsDto", b =>
+                {
+                    b.Property<string>("AttractionCategory")
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("AttractionName")
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("NrComments")
+                        .HasColumnType("int");
+
+                    b.ToTable((string)null);
+
+                    b.ToView("vwInfoComments", "gstusr");
                 });
 
             modelBuilder.Entity("Models.DTO.GstUsrInfoDbDto", b =>
@@ -202,6 +244,9 @@ namespace DbContext.Migrations.SqlServerDbContext
                     b.Property<int>("NrSeededAttractions")
                         .HasColumnType("int");
 
+                    b.Property<int>("NrSeededBanks")
+                        .HasColumnType("int");
+
                     b.Property<int>("NrSeededComments")
                         .HasColumnType("int");
 
@@ -209,6 +254,9 @@ namespace DbContext.Migrations.SqlServerDbContext
                         .HasColumnType("int");
 
                     b.Property<int>("NrUnseededAttractions")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NrUnseededBanks")
                         .HasColumnType("int");
 
                     b.Property<int>("NrUnseededComments")
