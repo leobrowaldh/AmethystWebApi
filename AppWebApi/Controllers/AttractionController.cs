@@ -10,10 +10,10 @@ using Models;
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace AppWebApi.Controllers;
- [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
+[Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
         Policy = null, Roles = "usr, supusr, sysadmin")]
-    [ApiController]
-    [Route("api/[controller]/[action]")]
+[ApiController]
+[Route("api/[controller]/[action]")]
 public class AttractionController : Controller
 {
     readonly IAttractionService _attractionService;
@@ -49,9 +49,9 @@ public class AttractionController : Controller
 
      [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
             Policy = null, Roles = "supusr, sysadmin")]
-        [HttpPut("{id}")]
-        [ProducesResponseType(200, Type = typeof(ResponseItemDto<IAttraction>))]
-        [ProducesResponseType(400, Type = typeof(string))]
+    [HttpGet("{id}")]
+    [ProducesResponseType(200, Type = typeof(ResponseItemDto<IAttraction>))]
+    [ProducesResponseType(400, Type = typeof(string))]
     public async Task<IActionResult> ReadItem(string id = null, bool flat = false)
     {
         try
@@ -70,11 +70,11 @@ public class AttractionController : Controller
         }
     }
 
-      [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
-            Policy = null, Roles = "supusr, sysadmin")]
-        [HttpPut("{id}")]
-        [ProducesResponseType(200, Type = typeof(ResponseItemDto<IAttraction>))]
-        [ProducesResponseType(400, Type = typeof(string))]
+    [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
+        Policy = null, Roles = "supusr, sysadmin")]
+    [HttpDelete("{id}")]
+    [ProducesResponseType(200, Type = typeof(ResponseItemDto<IAttraction>))]
+    [ProducesResponseType(400, Type = typeof(string))]
     public async Task<IActionResult> DeleteItem(string id)
     {
         try
@@ -98,11 +98,12 @@ public class AttractionController : Controller
 
 
 
-        [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
-            Policy = null, Roles = "supusr, sysadmin")]
-        [HttpPut("{id}")]
-        [ProducesResponseType(200, Type = typeof(ResponseItemDto<IAttraction>))]
-        [ProducesResponseType(400, Type = typeof(string))]    public async Task<IActionResult> UpdateItem(string id, [FromBody] AttractionCuDto item)
+    [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
+        Policy = null, Roles = "supusr, sysadmin")]
+    [HttpPut("{id}")]
+    [ProducesResponseType(200, Type = typeof(ResponseItemDto<IAttraction>))]
+    [ProducesResponseType(400, Type = typeof(string))]    
+    public async Task<IActionResult> UpdateItem(string id, [FromBody] AttractionCuDto item)
     {
         try
         {
@@ -124,11 +125,11 @@ public class AttractionController : Controller
         }
     }
 
-        [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
-            Policy = null, Roles = "supusr, sysadmin")]
-        [HttpPut("{id}")]
-        [ProducesResponseType(200, Type = typeof(ResponseItemDto<IAttraction>))]
-        [ProducesResponseType(400, Type = typeof(string))]
+    [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
+        Policy = null, Roles = "supusr, sysadmin")]
+    [HttpPost("{id}")]
+    [ProducesResponseType(200, Type = typeof(ResponseItemDto<IAttraction>))]
+    [ProducesResponseType(400, Type = typeof(string))]
     public async Task<IActionResult> CreateItem([FromBody] AttractionCuDto item)
     {
         try

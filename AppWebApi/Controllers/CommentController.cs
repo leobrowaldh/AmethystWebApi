@@ -49,11 +49,11 @@ public class CommentController : Controller
     }
 
    
-        [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
-            Policy = null, Roles = "supusr, sysadmin")]
-        [HttpPut("{id}")]
-        [ProducesResponseType(200, Type = typeof(ResponseItemDto<IComment>))]
-        [ProducesResponseType(400, Type = typeof(string))]
+    [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
+        Policy = null, Roles = "supusr, sysadmin")]
+    [HttpGet("{id}")]
+    [ProducesResponseType(200, Type = typeof(ResponseItemDto<IComment>))]
+    [ProducesResponseType(400, Type = typeof(string))]
     public async Task<IActionResult> ReadItem(string id = null, bool flat = false)
     {
         try
@@ -73,11 +73,11 @@ public class CommentController : Controller
     }
 
    
-        [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
-            Policy = null, Roles = "supusr, sysadmin")]
-        [HttpPut("{id}")]
-        [ProducesResponseType(200, Type = typeof(ResponseItemDto<IComment>))]
-        [ProducesResponseType(400, Type = typeof(string))]    public async Task<IActionResult> DeleteItem(string id)
+    [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
+        Policy = null, Roles = "supusr, sysadmin")]
+    [HttpDelete("{id}")]
+    [ProducesResponseType(200, Type = typeof(ResponseItemDto<IComment>))]
+    [ProducesResponseType(400, Type = typeof(string))]    public async Task<IActionResult> DeleteItem(string id)
     {
         try
         {
@@ -101,11 +101,11 @@ public class CommentController : Controller
 
 
    
-        [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
-            Policy = null, Roles = "supusr, sysadmin")]
-        [HttpPut("{id}")]
-        [ProducesResponseType(200, Type = typeof(ResponseItemDto<IComment>))]
-        [ProducesResponseType(400, Type = typeof(string))]
+    [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
+        Policy = null, Roles = "supusr, sysadmin")]
+    [HttpPut("{id}")]
+    [ProducesResponseType(200, Type = typeof(ResponseItemDto<IComment>))]
+    [ProducesResponseType(400, Type = typeof(string))]
     public async Task<IActionResult> UpdateItem(string id, [FromBody] CommentCuDto item)
     {
         try
