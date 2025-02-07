@@ -174,18 +174,18 @@ namespace DbContext.Migrations.SqlServerDbContext
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("UserEmail")
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("UserPassword")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("UserRole")
                         .IsRequired()
                         .HasColumnType("nvarchar(200)");
 

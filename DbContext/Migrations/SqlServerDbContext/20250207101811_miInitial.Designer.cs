@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DbContext.Migrations.SqlServerDbContext
 {
     [DbContext(typeof(MainDbContext.SqlServerDbContext))]
-    [Migration("20250207091551_miInitial")]
+    [Migration("20250207101811_miInitial")]
     partial class miInitial
     {
         /// <inheritdoc />
@@ -177,18 +177,18 @@ namespace DbContext.Migrations.SqlServerDbContext
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("UserEmail")
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("UserPassword")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("UserRole")
                         .IsRequired()
                         .HasColumnType("nvarchar(200)");
 

@@ -25,11 +25,11 @@ public class JWTService
         IEnumerable<Claim> claims = new Claim[] {
             //used to carry the loginUserSessionDto in the token
             new Claim("UserId", usrSession.UserId.ToString()),
-            new Claim("UserRole", usrSession.UserRole),
+            new Claim("Role", usrSession.Role),
             new Claim("UserName", usrSession.UserName),
 
             //used by Microsoft.AspNetCore.Authentication and used in the HTTP request pipeline
-            new Claim(ClaimTypes.Role, usrSession.UserRole),
+            new Claim(ClaimTypes.Role, usrSession.Role),
             new Claim(ClaimTypes.NameIdentifier, TokenId.ToString()),
             new Claim(ClaimTypes.Expiration, DateTime.UtcNow.AddMinutes(_jwtOptions.LifeTimeMinutes).ToString("MMM ddd dd yyyy HH:mm:ss tt"))
         };
@@ -59,7 +59,7 @@ public class JWTService
         _userToken.TokenId = tokenId;
         _userToken.EncryptedToken = new JwtSecurityTokenHandler().WriteToken(JWToken);
         _userToken.ExpireTime = expireTime;
-        _userToken.UserRole = _usrSession.UserRole;
+        _userToken.Role = _usrSession.Role;
         _userToken.UserName = _usrSession.UserName;
         _userToken.UserId = _usrSession.UserId.Value;
 
@@ -83,8 +83,8 @@ public class JWTService
                 case "UserName":
                     _usr.UserName = claim.Value;
                     break;
-                case "UserRole":
-                    _usr.UserRole = claim.Value;
+                case "Role":
+                    _usr.Role = claim.Value;
                     break;
             }
         }

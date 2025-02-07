@@ -43,9 +43,9 @@ namespace DbContext.Migrations.SqlServerDbContext
                 {
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(200)", nullable: false),
-                    UserPassword = table.Column<string>(type: "nvarchar(200)", nullable: false),
-                    UserRole = table.Column<string>(type: "nvarchar(200)", nullable: false),
-                    UserEmail = table.Column<string>(type: "nvarchar(200)", nullable: true)
+                    Password = table.Column<string>(type: "nvarchar(200)", nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(200)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(200)", nullable: true)
                 },
                 constraints: table =>
                 {

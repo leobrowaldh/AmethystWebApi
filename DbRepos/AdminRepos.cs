@@ -109,9 +109,9 @@ public class AdminDbRepos
                 {
                     UserId = Guid.NewGuid(),
                     UserName = $"user{i}",
-                    UserEmail = $"user{i}@gmail.com",
-                    UserPassword = _encryptions.EncryptPasswordToBase64($"user{i}"),
-                    UserRole = "usr"
+                    Email = $"user{i}@gmail.com",
+                    Password = _encryptions.EncryptPasswordToBase64($"user{i}"),
+                    Role = "usr"
                 });
             }
 
@@ -122,9 +122,9 @@ public class AdminDbRepos
                 {
                     UserId = Guid.NewGuid(),
                     UserName = $"superuser{i}",
-                    UserEmail = $"superuser{i}@gmail.com",
-                    UserPassword = _encryptions.EncryptPasswordToBase64($"superuser{i}"),
-                    UserRole = "supusr"
+                    Email = $"superuser{i}@gmail.com",
+                    Password = _encryptions.EncryptPasswordToBase64($"superuser{i}"),
+                    Role = "supusr"
                 });
             }
 
@@ -135,18 +135,18 @@ public class AdminDbRepos
                 {
                     UserId = Guid.NewGuid(),
                     UserName = $"sysadmin{i}",
-                    UserEmail = $"sysadmin{i}@gmail.com",
-                    UserPassword = _encryptions.EncryptPasswordToBase64($"sysadmin{i}"),
-                    UserRole = "sysadmin"
+                    Email = $"sysadmin{i}@gmail.com",
+                    Password = _encryptions.EncryptPasswordToBase64($"sysadmin{i}"),
+                    Role = "sysadmin"
                 });
             }
             await _dbContext.SaveChangesAsync();
 
             var _info = new UserDto
             {
-                NrUsers = await _dbContext.Users.CountAsync(i => i.UserRole == "usr"),
-                NrSuperUsers = await _dbContext.Users.CountAsync(i => i.UserRole == "supusr"),
-                NrSystemAdmin = await _dbContext.Users.CountAsync(i => i.UserRole == "sysadmin")
+                NrUsers = await _dbContext.Users.CountAsync(i => i.Role == "usr"),
+                NrSuperUsers = await _dbContext.Users.CountAsync(i => i.Role == "supusr"),
+                NrSystemAdmin = await _dbContext.Users.CountAsync(i => i.Role == "sysadmin")
             };
 
             return _info;

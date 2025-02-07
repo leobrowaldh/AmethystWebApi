@@ -54,7 +54,7 @@ public class LoginDbRepos
                 //Notice the soft cast conversion 'as' it will be null if cast cannot be made
                 UserId = cmd1.Parameters[_usrIdIdx].Value as Guid?,
                 UserName = cmd1.Parameters[_usrIdx].Value as string,
-                UserRole = cmd1.Parameters[_roleIdx].Value as string
+                Role = cmd1.Parameters[_roleIdx].Value as string
             };
 
             return new ResponseItemDto<LoginUserSessionDto>()
