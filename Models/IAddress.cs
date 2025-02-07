@@ -12,5 +12,5 @@ public interface IAddress
     public string StreetName { get; set; }
     public int ZipCode { get; set; }
 
-    public List<IAttraction> AttractionModels { get; set; }
+    public List<IAttraction> Attractions { get; set; }
 }

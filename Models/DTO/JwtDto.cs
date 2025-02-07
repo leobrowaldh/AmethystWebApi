@@ -12,7 +12,7 @@ public class JwtUserToken
     //This will be the User part of the Claim, which can later be retrieved
     public Guid UserId { get; set; }
     public string UserName { get; set; }
-    public string UserRole { get; set; }
+    public string Role { get; set; }
 }
 
 

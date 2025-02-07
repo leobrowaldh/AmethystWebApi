@@ -137,7 +137,7 @@ namespace DbContext.Migrations.SqlServerDbContext
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AttractionModelDbMAttractionId")
+                    b.Property<Guid>("AttractionDbMAttractionId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("CommentAge")
@@ -166,7 +166,7 @@ namespace DbContext.Migrations.SqlServerDbContext
 
                     b.HasKey("CommentId");
 
-                    b.HasIndex("AttractionModelDbMAttractionId");
+                    b.HasIndex("AttractionDbMAttractionId");
 
                     b.ToTable("Comments", "supusr");
                 });
@@ -177,18 +177,18 @@ namespace DbContext.Migrations.SqlServerDbContext
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("UserEmail")
+                    b.Property<string>("Email")
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<string>("UserPassword")
+                    b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<string>("UserRole")
+                    b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("nvarchar(200)");
 
@@ -225,7 +225,7 @@ namespace DbContext.Migrations.SqlServerDbContext
             modelBuilder.Entity("DbModels.AttractionDbM", b =>
                 {
                     b.HasOne("DbModels.AddressDbM", "AddressDbM")
-                        .WithMany("AttractionModelDbM")
+                        .WithMany("AttractionDbM")
                         .HasForeignKey("AddressDbMAddressId");
 
                     b.Navigation("AddressDbM");
@@ -244,18 +244,18 @@ namespace DbContext.Migrations.SqlServerDbContext
 
             modelBuilder.Entity("DbModels.CommentDbM", b =>
                 {
-                    b.HasOne("DbModels.AttractionDbM", "AttractionModelDbM")
+                    b.HasOne("DbModels.AttractionDbM", "AttractionDbM")
                         .WithMany("CommentsDbM")
-                        .HasForeignKey("AttractionModelDbMAttractionId")
+                        .HasForeignKey("AttractionDbMAttractionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("AttractionModelDbM");
+                    b.Navigation("AttractionDbM");
                 });
 
             modelBuilder.Entity("DbModels.AddressDbM", b =>
                 {
-                    b.Navigation("AttractionModelDbM");
+                    b.Navigation("AttractionDbM");
                 });
 
             modelBuilder.Entity("DbModels.AttractionDbM", b =>

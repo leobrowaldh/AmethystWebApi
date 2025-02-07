@@ -22,10 +22,10 @@ public class UserDbM : User
     public override string UserName { get; set; }
 
     [Required]
-    public override string UserPassword { get; set; }
+    public override string Password { get; set; }
 
     [Required]
-    public override string UserRole { get; set; }
+    public override string Role { get; set; }
 }
 
 

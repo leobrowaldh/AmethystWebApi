@@ -19,8 +19,8 @@ public static class DbContextExtensions
             var configuration = serviceProvider.GetRequiredService<IConfiguration>(); 
             var databaseConnections = serviceProvider.GetRequiredService<DatabaseConnections>(); 
             
-            var userRole = configuration["DatabaseConnections:DefaultDataUser"];
-            var conn = databaseConnections.GetDataConnectionDetails(userRole);
+            var Role = configuration["DatabaseConnections:DefaultDataUser"];
+            var conn = databaseConnections.GetDataConnectionDetails(Role);
             if (databaseConnections.SetupInfo.DataConnectionServer == DatabaseServer.SQLServer)
             {
                 options.UseSqlServer(conn.DbConnectionString, options => options.EnableRetryOnFailure());
