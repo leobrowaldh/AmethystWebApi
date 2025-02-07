@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
 
@@ -9,7 +10,9 @@ using Models;
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace AppWebApi.Controllers
-{
+{   
+    [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
+        Policy = null, Roles = "supusr, sysadmin")]
     [ApiController]
     [Route("api/[controller]/[action]")]
     public class BankController : Controller
@@ -170,12 +173,12 @@ namespace AppWebApi.Controllers
                 return BadRequest($"{ex.Message}.{ex.InnerException?.Message}");
             }
         }
-
+  [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
+            Policy = null, Roles = "sysadmin")]        
         [HttpGet()]
         [ProducesResponseType(200, Type = typeof(ResponseItemDto<IBank>))]
         [ProducesResponseType(400, Type = typeof(string))]
-        [ProducesResponseType(404, Type = typeof(string))]
-        public async Task<IActionResult> ReadClearCC(string id = null)
+        [ProducesResponseType(404, Type = typeof(string))]        public async Task<IActionResult> ReadClearCC(string id = null)
         {
             try
             {
