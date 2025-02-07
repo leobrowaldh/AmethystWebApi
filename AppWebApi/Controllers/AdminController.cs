@@ -14,7 +14,9 @@ namespace AppWebApi.Controllers
     #if !DEBUG    
     [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
         Policy = null, Roles = "sysadmin")]
-#endif
+    #endif
+    [Route("api/[controller]/[action]")]
+    [ApiController]
     public class AdminController : Controller
     {
         readonly DatabaseConnections _dbConnections;
@@ -50,7 +52,7 @@ namespace AppWebApi.Controllers
         [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
             Policy = null, Roles = "sysadmin")]
 
-        [HttpGet()]
+        [HttpPost()]
         [ProducesResponseType(200, Type = typeof(ResponseItemDto<GstUsrInfoAllDto>))]
         [ProducesResponseType(400, Type = typeof(string))]
         public async Task<IActionResult> Seed(string count = "10")
@@ -72,7 +74,7 @@ namespace AppWebApi.Controllers
         [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
             Policy = null, Roles = "sysadmin")]
 
-        [HttpGet()]
+        [HttpDelete()]
         [ProducesResponseType(200, Type = typeof(ResponseItemDto<GstUsrInfoAllDto>))]
         [ProducesResponseType(400, Type = typeof(string))]
         public async Task<IActionResult> RemoveSeed(string seeded = "true")
@@ -92,7 +94,7 @@ namespace AppWebApi.Controllers
             }
         }
 
-                [HttpGet()]
+        [HttpPost()]
         [ProducesResponseType(200, Type = typeof(UserDto))]
         [ProducesResponseType(400, Type = typeof(string))]
         public async Task<IActionResult> SeedUsers(string countUsr = "32", string countSupUsr = "2", string countSysAdmin = "1")
