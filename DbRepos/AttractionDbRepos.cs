@@ -56,12 +56,14 @@ public class AttractionDbRepos
         
         if (flat)
         {
-            query = _dbContext.Attractions.AsNoTracking();
+            query = _dbContext.Attractions.AsNoTracking()
+                .Include(a => a.AddressDbM); //Address is needed to filter by city
         }
         else
         {
             query = _dbContext.Attractions.AsNoTracking()
-                .Include(a => a.Comments);
+                .Include(a => a.CommentsDbM)
+                .Include(a => a.AddressDbM);
         }
 
         return new ResponsePageDto<IAttraction>()
@@ -72,15 +74,19 @@ public class AttractionDbRepos
             //Adding filter functionality
             .Where(a => (a.Seeded == seeded) &&
                         (a.strCategory.ToLower().Contains(filter) ||
-                         a.Name.ToLower().Contains(filter) ))
+                         a.Name.ToLower().Contains(filter) ||
+                         a.Description.ToLower().Contains(filter) ||
+                         a.AddressDbM.strCity.ToLower().Contains(filter)))
             .CountAsync(),
 
             PageItems = await query
 
             //Adding filter functionality
             .Where(a => (a.Seeded == seeded) &&
-                        (a.Name.ToLower().Contains(filter) ||
-                         a.strCategory.ToLower().Contains(filter)))
+                        (a.strCategory.ToLower().Contains(filter) ||
+                         a.Name.ToLower().Contains(filter) ||
+                         a.Description.ToLower().Contains(filter) ||
+                         a.AddressDbM.strCity.ToLower().Contains(filter)))
 
             //Adding paging
             .Skip(pageNumber * pageSize)

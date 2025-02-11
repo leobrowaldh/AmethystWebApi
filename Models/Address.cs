@@ -7,8 +7,8 @@ namespace Models;
 public class Address:IAddress, ISeed<Address>
 {
     public virtual Guid AddressId { get; set; } = Guid.NewGuid();
-    public virtual City City { get; set; }
-    public virtual Country Country { get; set; }
+    public virtual EnCity City { get; set; }
+    public virtual EnCountry Country { get; set; }
 
     public virtual string StreetName { get; set; }
     public int ZipCode { get; set; }
@@ -22,8 +22,8 @@ public class Address:IAddress, ISeed<Address>
         Seeded = true;
         AddressId = Guid.NewGuid();
 
-        City = seeder.FromEnum<City>();
-        Country = seeder.FromEnum<Country>();
+        City = seeder.FromEnum<EnCity>();
+        Country = seeder.FromEnum<EnCountry>();
 
         StreetName = seeder.StreetAddress();
         ZipCode = seeder.ZipCode;

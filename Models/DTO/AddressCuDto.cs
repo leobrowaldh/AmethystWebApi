@@ -14,8 +14,8 @@ public class AddressCuDto
 {
     public virtual Guid? AddressId { get; set; }
 
-    public City City { get; set; }
-    public Country Country { get; set; }
+    public EnCity City { get; set; }
+    public EnCountry Country { get; set; }
     
     public string StreetName { get; set; }
     public int ZipCode { get; set; }

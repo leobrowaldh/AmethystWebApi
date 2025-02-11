@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DbContext.Migrations.SqlServerDbContext
 {
     [DbContext(typeof(MainDbContext.SqlServerDbContext))]
-    [Migration("20250211115445_miInitial")]
+    [Migration("20250211134601_miInitial")]
     partial class miInitial
     {
         /// <inheritdoc />
@@ -112,7 +112,7 @@ namespace DbContext.Migrations.SqlServerDbContext
                         .HasColumnType("int");
 
                     b.Property<string>("EnryptedToken")
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RiskLevel")
                         .HasColumnType("int");
