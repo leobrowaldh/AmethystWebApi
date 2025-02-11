@@ -30,34 +30,23 @@ public class AttractionServiceDb : IAttractionService
     public Task<ResponseItemDto<IAttraction>> CreateAttractionAsync(AttractionCuDto item) => _attractionRepo.CreateItemAsync(item);
 
     public Task<ResponsePageDto<IComment>> ReadCommentsAsync(bool seeded, bool flat, string filter, int pageNumber, int pageSize) => _commentRepo.ReadItemsAsync(seeded, flat, filter, pageNumber, pageSize);
-
     public Task<ResponseItemDto<IComment>> ReadCommentAsync(Guid id, bool flat) => _commentRepo.ReadItemAsync(id, flat);
-
     public Task<ResponseItemDto<IComment>> DeleteCommentAsync(Guid id) => _commentRepo.DeleteItemAsync(id);
-
     public Task<ResponseItemDto<IComment>> UpdateCommentAsync(CommentCuDto item) => _commentRepo.UpdateItemAsync(item);
-
     public Task<ResponseItemDto<IComment>> CreateCommentAsync(CommentCuDto item) => _commentRepo.CreateItemAsync(item);
+
     public Task<ResponsePageDto<IAddress>> ReadAddressesAsync(bool seeded, bool flat, string filter, int pageNumber, int pageSize) => _addressRepo.ReadItemsAsync(seeded, flat, filter, pageNumber, pageSize);
-
     public Task<ResponseItemDto<IAddress>> ReadAddressAsync(Guid id, bool flat) => _addressRepo.ReadItemAsync(id, flat);
-
     public Task<ResponseItemDto<IAddress>> DeleteAddressAsync(Guid id) => _addressRepo.DeleteItemAsync(id);
-
     public Task<ResponseItemDto<IAddress>> UpdateAddressAsync(AddressCuDto item) => _addressRepo.UpdateItemAsync(item);
-
     public Task<ResponseItemDto<IAddress>> CreateAddressAsync(AddressCuDto item) => _addressRepo.CreateItemAsync(item);
 
     public Task<ResponsePageDto<IBank>> ReadBankAsync(bool seeded, bool flat, string filter, int pageNumber, int pageSize) => _bankRepo.ReadItemsAsync(seeded, flat, filter, pageNumber, pageSize);
-
     public Task<ResponseItemDto<IBank>> ReadBanksAsync(Guid id, bool flat) => _bankRepo.ReadItemAsync(id, flat);
-
     public Task<ResponseItemDto<IBank>> DeleteBankAsync(Guid id) => _bankRepo.DeleteBankAsync(id);
-
     public Task<ResponseItemDto<IBank>> CreateBankAsync(BankCuDto item) => _bankRepo.CreateBankAsync(item);
 
     public Task<ResponsePageDto<IAttraction>> ReadAttractionsWithCCAsync(bool hasbank, int pageNumber, int pageSize) => _bankRepo.ReadAttractionsWithCCAsync(hasbank, pageNumber, pageSize);
-
     public Task<ResponseItemDto<IBank>> ReadDecryptedCCAsync(Guid id) => _bankRepo.ReadDecryptedCCAsync(id);
 
 }

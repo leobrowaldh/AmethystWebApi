@@ -18,6 +18,11 @@ public class AttractionCuDto
     public AttractionCategory Category { get; set; }
     public string Name { get; set; }
 
+    public virtual List<Guid> CommentIds { get; set; } = null;
+    public virtual Guid AddressId { get; set; }
+    
+
+
     public AttractionCuDto() { }
     public AttractionCuDto(IAttraction org)
     {
@@ -25,6 +30,8 @@ public class AttractionCuDto
         Name = org.Name;
         Category = org.Category;
         
+        CommentIds = org.Comments?.Select(c => c.CommentId).ToList();
+        AddressId = org.Address.AddressId;
     }
 
 

@@ -33,7 +33,7 @@ public static class DbContextExtensions
                 var token = httpContext.GetTokenAsync("access_token").Result;
                 if (token != null)
                 {
-                    userRole = jwtService.DecodeToken(token).UserRole;
+                    userRole = jwtService.DecodeToken(token).Role;
                 }
             } 
             var conn = databaseConnections.GetDataConnectionDetails(userRole);
