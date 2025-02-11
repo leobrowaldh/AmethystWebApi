@@ -19,7 +19,7 @@ public class GstUsrInfoDbDto
 
 public class GstUsrInfoAttractionsDto
 {
-    public string Category { get; set; } = null;
+    public string strCategory { get; set; } = null;
     public int NrAttractions { get; set; } = 0;
 }
 

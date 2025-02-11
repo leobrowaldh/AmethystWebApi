@@ -54,16 +54,16 @@ public class AdminDbRepos
 
         var attractions = rnd.ItemsToList<AttractionDbM>(nrOfItems);
 
-        //Assign Banks to Attractions with 50% probability
-         foreach (var a in attractions)
-        {
-            a.BankDbM = (rnd.Bool) ? new BankDbM(){BankNumber = a.Name}.Seed(rnd) : null;
-            a.BankDbM?.EnryptAndObfuscate(_encryptions.AesEncryptToBase64);
-        #if DEBUG
-        var temp = a.BankDbM?.Decrypt(_encryptions.AesDecryptFromBase64<Bank>);
-            if (temp?.BankId != a.BankDbM?.BankId) throw new SecurityException("CreditCard encryption error");
-        #endif
-        }
+        // //Assign Banks to Attractions with 50% probability
+        //  foreach (var a in attractions)
+        // {
+        //     a.BankDbM = (rnd.Bool) ? new BankDbM(){BankNumber = a.Name}.Seed(rnd) : null;
+        //     a.BankDbM?.EnryptAndObfuscate(_encryptions.AesEncryptToBase64);
+        // #if DEBUG
+        // var temp = a.BankDbM?.Decrypt(_encryptions.AesDecryptFromBase64<Bank>);
+        //     if (temp?.BankId != a.BankDbM?.BankId) throw new SecurityException("CreditCard encryption error");
+        // #endif
+        // }
 
         foreach (var attraction in attractions)
         {
@@ -73,7 +73,7 @@ public class AdminDbRepos
         _dbContext.Attractions.AddRange(attractions);
         await _dbContext.SaveChangesAsync();
         return await InfoAsync();        
-    }    
+    }
     
     public async Task<ResponseItemDto<GstUsrInfoAllDto>> RemoveSeedAsync(bool seeded)
     {

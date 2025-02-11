@@ -209,11 +209,11 @@ namespace DbContext.Migrations.SqlServerDbContext
 
             modelBuilder.Entity("Models.DTO.GstUsrInfoAttractionsDto", b =>
                 {
-                    b.Property<string>("Category")
-                        .HasColumnType("nvarchar(200)");
-
                     b.Property<int>("NrAttractions")
                         .HasColumnType("int");
+
+                    b.Property<string>("strCategory")
+                        .HasColumnType("nvarchar(200)");
 
                     b.ToTable((string)null);
 
