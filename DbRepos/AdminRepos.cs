@@ -9,11 +9,13 @@ using DbContext;
 using Models;
 using Seido.Utilities.SeedGenerator;
 using Configuration;
+using System.Security;
 
 namespace DbRepos;
 
 public class AdminDbRepos
 {
+    private const string _seedSource = "./app-seeds.json";
     private readonly ILogger<AdminDbRepos> _logger;
     private Encryptions _encryptions;
     private readonly MainDbContext _dbContext;
@@ -29,8 +31,12 @@ public class AdminDbRepos
 
     public async Task<ResponseItemDto<GstUsrInfoAllDto>> InfoAsync()
     {
+      
         var info = new GstUsrInfoAllDto();
         info.Db = await _dbContext.InfoDbView.FirstAsync();
+        info.Comments= await _dbContext.InfoCommentsView.ToListAsync();
+        info.Addresses = await _dbContext.InfoAddressesView.ToListAsync();
+
 
         return new ResponseItemDto<GstUsrInfoAllDto>()
         {
@@ -49,11 +55,15 @@ public class AdminDbRepos
         var attractions = rnd.ItemsToList<AttractionDbM>(nrOfItems);
 
         //Assign Banks to Attractions with 50% probability
-        // foreach (var a in attractions)
-        // {
-        //     a.BankDbM = (rnd.Bool) ? new BankDbM(){BankNumber = a.Name}.Seed(rnd) : null;
-        //     a.BankDbM?.EnryptAndObfuscate(_encryptions.AesEncryptToBase64);
-        // }
+         foreach (var a in attractions)
+        {
+            a.BankDbM = (rnd.Bool) ? new BankDbM(){BankNumber = a.Name}.Seed(rnd) : null;
+            a.BankDbM?.EnryptAndObfuscate(_encryptions.AesEncryptToBase64);
+        #if DEBUG
+        var temp = a.BankDbM?.Decrypt(_encryptions.AesDecryptFromBase64<Bank>);
+            if (temp?.BankId != a.BankDbM?.BankId) throw new SecurityException("CreditCard encryption error");
+        #endif
+        }
 
         foreach (var attraction in attractions)
         {
