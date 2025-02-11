@@ -58,6 +58,11 @@ public class MainDbContext : Microsoft.EntityFrameworkCore.DbContext
         modelBuilder.Entity<GstUsrInfoAddressesDto>().ToView("vwInfoAddresses", "gstusr").HasNoKey();
         #endregion
 
+        #region override modelbuilder
+        //Tokens can be very long
+        modelBuilder.Entity<BankDbM>()
+            .Property(a => a.EnryptedToken).HasColumnType("nvarchar(max)");
+        #endregion
         
         base.OnModelCreating(modelBuilder);
     }
