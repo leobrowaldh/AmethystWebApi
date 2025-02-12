@@ -122,7 +122,7 @@ public class AddressController : ControllerBase
 
     [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
         Policy = null, Roles = "supusr, sysadmin")]
-    [HttpPost("{id}")]
+    [HttpPost()]
     [ProducesResponseType(200, Type = typeof(ResponseItemDto<IAddress>))]
     [ProducesResponseType(400, Type = typeof(string))]   
     public async Task<IActionResult> CreateItem([FromBody] AddressCuDto item)
