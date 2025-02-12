@@ -54,7 +54,11 @@ public class AttractionDbRepos
 
         IQueryable<AttractionDbM> query;
         
-        if (flat)
+        if (flat && filter == "")
+        {
+            query = _dbContext.Attractions.AsNoTracking();
+        }
+        else if (flat)
         {
             query = _dbContext.Attractions.AsNoTracking()
                 .Include(a => a.AddressDbM); //Address is needed to filter by city
