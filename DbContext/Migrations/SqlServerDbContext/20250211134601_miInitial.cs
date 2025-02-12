@@ -88,7 +88,7 @@ namespace DbContext.Migrations.SqlServerDbContext
                     BankNumber = table.Column<string>(type: "nvarchar(200)", nullable: true),
                     RiskLevel = table.Column<int>(type: "int", nullable: false),
                     BankComment = table.Column<string>(type: "nvarchar(200)", nullable: true),
-                    EnryptedToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EncryptedToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Seeded = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>

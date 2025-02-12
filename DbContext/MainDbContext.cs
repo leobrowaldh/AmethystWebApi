@@ -61,7 +61,7 @@ public class MainDbContext : Microsoft.EntityFrameworkCore.DbContext
         #region override modelbuilder
         //Tokens can be very long
         modelBuilder.Entity<BankDbM>()
-            .Property(a => a.EnryptedToken).HasColumnType("nvarchar(max)");
+            .Property(a => a.EncryptedToken).HasColumnType("nvarchar(max)");
         #endregion
         
         base.OnModelCreating(modelBuilder);

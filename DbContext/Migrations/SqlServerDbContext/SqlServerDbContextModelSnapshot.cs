@@ -108,7 +108,7 @@ namespace DbContext.Migrations.SqlServerDbContext
                     b.Property<int>("Banks")
                         .HasColumnType("int");
 
-                    b.Property<string>("EnryptedToken")
+                    b.Property<string>("EncryptedToken")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RiskLevel")
