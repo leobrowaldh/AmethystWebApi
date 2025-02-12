@@ -72,14 +72,14 @@ public class BankDbRepos
             //Adding filter functionality
             .Where(i => (i.Seeded == seeded) && 
                         (i.BankComment.ToLower().Contains(filter) ||
-                       i.strIssuer.ToLower().Contains(filter))).CountAsync(),
+                       i.Bank.ToLower().Contains(filter))).CountAsync(),
 
             PageItems = await query
 
             //Adding filter functionality
             .Where(i => (i.Seeded == seeded) && 
                         (i.BankComment.ToLower().Contains(filter) ||
-                         i.strIssuer.ToLower().Contains(filter)))
+                         i.Bank.ToLower().Contains(filter)))
 
             //Adding paging
             .Skip(pageNumber * pageSize)

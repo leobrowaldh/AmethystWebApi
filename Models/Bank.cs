@@ -17,7 +17,7 @@ public class Bank : IBank, ISeed<Bank>
     public string BankComment {get; set; }
 
     [JsonIgnore]
-    public string EnryptedToken {get; set; }
+    public string EncryptedToken {get; set; }
     
 
     //Navigation properties
@@ -42,7 +42,7 @@ public class Bank : IBank, ISeed<Bank>
 
     public Bank EnryptAndObfuscate (Func<Bank, string> encryptor)
     {
-        this.EnryptedToken = encryptor(this);
+        this.EncryptedToken = encryptor(this);
 
        
         this.BankComment=Regex.Replace(BankComment, "(?<=.{1}).", "*");
@@ -59,7 +59,7 @@ public class Bank : IBank, ISeed<Bank>
 
     public Bank Decrypt (Func<string, Bank> decryptor)
     {
-        return decryptor(this.EnryptedToken);
+        return decryptor(this.EncryptedToken);
     }
 }
 

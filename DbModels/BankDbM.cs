@@ -14,7 +14,7 @@ public class BankDbM : Bank, ISeed<Bank>
     public override Guid  BankId { get; set; }
 
     #region adding more readability to an enum type in the database
-    public virtual string strIssuer
+    public virtual string Bank
     {
         get => Banks.ToString();
         set { }  //set is needed by EFC to include in the database, so I make it to do nothing
