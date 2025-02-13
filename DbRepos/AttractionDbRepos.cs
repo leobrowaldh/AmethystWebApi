@@ -28,7 +28,8 @@ public class AttractionDbRepos
         if (!flat)
         {
             query = _dbContext.Attractions.AsNoTracking()
-                .Include(a => a.Comments)
+                .Include(a => a.CommentsDbM)
+                .Include(a => a.AddressDbM)
                 .Where(a => a.AttractionId == id);
         }
         else

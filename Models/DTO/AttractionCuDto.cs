@@ -14,7 +14,7 @@ public class AttractionCuDto
     public AttractionCategory Category { get; set; }
     public string Name { get; set; }
 
-    public virtual List<Guid> CommentIds { get; set; }= [];
+    public virtual List<Guid> CommentIds { get; set; } = [];
     public virtual Guid AddressId { get; set; }
     
 
