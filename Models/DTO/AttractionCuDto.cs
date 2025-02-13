@@ -14,7 +14,7 @@ public class AttractionCuDto
 {
     public virtual Guid? AttractionId { get; set; }
 
-   
+    [EnumDataType(typeof(AttractionCategory), ErrorMessage = $"Invalid {nameof(AttractionCategory)} type.")]
     public AttractionCategory Category { get; set; }
     public string Name { get; set; }
 

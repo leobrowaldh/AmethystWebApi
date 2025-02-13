@@ -13,11 +13,11 @@ namespace Models.DTO;
 public class BankCuDto
 {
     public Guid? BankId { get; set; }
+    [EnumDataType(typeof(EnBank), ErrorMessage = $"Invalid {nameof(EnBank)} type.")]
     public EnBank Banks { get; set; }
-
-   
      public string BankNumber { get; set; }
-      public EnRiskLevel  RiskLevel { get; set; }
+    [EnumDataType(typeof(EnRiskLevel), ErrorMessage = $"Invalid {nameof(EnRiskLevel)} type.")]
+    public EnRiskLevel  RiskLevel { get; set; }
     public string BankComment {get; set; }
     //Navigation properties
     public Guid AttractionId { get; set; }
