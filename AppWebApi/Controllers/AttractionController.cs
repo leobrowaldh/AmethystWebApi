@@ -143,8 +143,8 @@ public class AttractionController : Controller
         }
         catch (Exception ex)
         {
-            _logger.LogError($"{nameof(CreateItem)}: {ex.Message}");
-            return BadRequest($"Could not create. Error {ex.Message}");
+            _logger.LogError($"{nameof(CreateItem)}: {ex.InnerException?.Message}");
+            return BadRequest($"Could not create. Error {ex.InnerException?.Message}");
         }
     }
 
