@@ -1,7 +1,4 @@
-using System;
-using System.Diagnostics.Metrics;
-using System.Reflection.Emit;
-using System.Xml.Linq;
+using System.ComponentModel.DataAnnotations;
 
 namespace Models.DTO;
 
@@ -13,8 +10,9 @@ namespace Models.DTO;
 public class CommentCuDto
 {
     public virtual Guid? CommentId { get; set; }
-
+    [EnumDataType(typeof(CommentType), ErrorMessage = $"Invalid {nameof(CommentType)} type.")]
     public CommentType CommentType { get; set; }
+    [EnumDataType(typeof(CommentRating), ErrorMessage = $"Invalid {nameof(CommentRating)} type.")]
     public CommentRating CommentRating { get; set; }
     
     public int CommentAge { get; set; }
