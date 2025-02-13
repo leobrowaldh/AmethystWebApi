@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DbContext.Migrations.SqlServerDbContext
 {
     [DbContext(typeof(MainDbContext.SqlServerDbContext))]
-    [Migration("20250211134601_miInitial")]
+    [Migration("20250213094429_miInitial")]
     partial class miInitial
     {
         /// <inheritdoc />
@@ -120,7 +120,10 @@ namespace DbContext.Migrations.SqlServerDbContext
                     b.Property<bool>("Seeded")
                         .HasColumnType("bit");
 
-                    b.Property<string>("strIssuer")
+                    b.Property<string>("strBank")
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("strRiskLevel")
                         .HasColumnType("nvarchar(200)");
 
                     b.HasKey("BankId");

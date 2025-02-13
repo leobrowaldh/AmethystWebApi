@@ -117,7 +117,10 @@ namespace DbContext.Migrations.SqlServerDbContext
                     b.Property<bool>("Seeded")
                         .HasColumnType("bit");
 
-                    b.Property<string>("strIssuer")
+                    b.Property<string>("strBank")
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("strRiskLevel")
                         .HasColumnType("nvarchar(200)");
 
                     b.HasKey("BankId");

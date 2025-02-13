@@ -14,12 +14,22 @@ public class BankDbM : Bank, ISeed<Bank>
     public override Guid  BankId { get; set; }
 
     #region adding more readability to an enum type in the database
-    public virtual string Bank
+    public virtual string strBank
     {
-        get => Banks.ToString();
+        
+        get => strBank.ToString();
         set { }  //set is needed by EFC to include in the database, so I make it to do nothing
     }
+    public virtual string strRiskLevel
+    {
+        
+        get => RiskLevel.ToString();
+        set { }  //set is needed by EFC to include in the database, so I make it to do nothing
+    }
+   
     #endregion
+
+    
     
     //In a one-to-one relationship, you needed to establish that the Foreign Key should in this table, CreditCards
     //Connecting below FK above with EmployeeDbM.EmployeeId
