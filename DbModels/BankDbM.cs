@@ -17,7 +17,7 @@ public class BankDbM : Bank, ISeed<Bank>
     public virtual string strBank
     {
         
-        get => strBank.ToString();
+        get => Banks.ToString();
         set { }  //set is needed by EFC to include in the database, so I make it to do nothing
     }
     public virtual string strRiskLevel
