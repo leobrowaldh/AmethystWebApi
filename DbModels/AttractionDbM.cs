@@ -16,6 +16,9 @@ public class AttractionDbM : Attraction, ISeed<AttractionDbM>
     [Required]
     [StringLength(50)]
     public override string Name { get; set; }
+    [Required]
+    [StringLength(100)]
+    public override string Description { get; set; }
 
     #region adding more readability to an enum type in the database
     public virtual string strCategory
@@ -54,6 +57,7 @@ public class AttractionDbM : Attraction, ISeed<AttractionDbM>
        
         Category = org.Category;
         Name = org.Name;
+        Description = org.Description;
 
       
         return this;

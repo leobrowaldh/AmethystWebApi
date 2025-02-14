@@ -19,6 +19,7 @@ public class Attraction: IAttraction, ISeed<Attraction>
     public virtual Attraction Seed(csSeedGenerator rnd)
     {
         this.Name = rnd.FromList(SeedingStrings.AttractionFirstName) + " " + rnd.FromList(SeedingStrings.AttractionLastName);
+        this.Description = rnd.LatinSentence;
         this.Category = rnd.FromEnum<AttractionCategory>();
         this.Seeded = true;
         return this;

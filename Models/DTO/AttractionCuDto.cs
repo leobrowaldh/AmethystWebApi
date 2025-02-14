@@ -13,6 +13,7 @@ public class AttractionCuDto
     [EnumDataType(typeof(AttractionCategory), ErrorMessage = $"Invalid {nameof(AttractionCategory)} type.")]
     public AttractionCategory Category { get; set; }
     public string Name { get; set; }
+    public string Description { get; set; }
 
     public virtual List<Guid> CommentIds { get; set; } = [];
     public virtual Guid AddressId { get; set; }
@@ -25,6 +26,7 @@ public class AttractionCuDto
         AttractionId = org.AttractionId;
         Name = org.Name;
         Category = org.Category;
+        Description = org.Description;
         
         CommentIds = org.Comments?.Select(c => c.CommentId).ToList();
         AddressId = org.Address.AddressId;
