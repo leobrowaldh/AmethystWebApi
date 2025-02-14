@@ -78,85 +78,85 @@ public class AdminDbRepos
     
     public async Task<ResponseItemDto<GstUsrInfoAllDto>> RemoveSeedAsync(bool seeded)
     {
-            var parameters = new List<SqlParameter>();
+        var parameters = new List<SqlParameter>();
 
-            var retValue = new SqlParameter("retval", SqlDbType.Int) { Direction = ParameterDirection.Output };
-            var seededArg = new SqlParameter("seeded", seeded);
+        var retValue = new SqlParameter("retval", SqlDbType.Int) { Direction = ParameterDirection.Output };
+        var seededArg = new SqlParameter("seeded", seeded);
 
-            parameters.Add(retValue);
-            parameters.Add(seededArg);
+        parameters.Add(retValue);
+        parameters.Add(seededArg);
 
-            //there is no FromSqlRawAsync to I make one here
-            var _query = await Task.Run(() =>
-                _dbContext.InfoDbView.FromSqlRaw($"EXEC @retval = supusr.spDeleteAll @seeded",
-                    parameters.ToArray()).AsEnumerable());
+        //there is no FromSqlRawAsync to I make one here
+        var _query = await Task.Run(() =>
+            _dbContext.InfoDbView.FromSqlRaw($"EXEC @retval = supusr.spDeleteAll @seeded",
+                parameters.ToArray()).AsEnumerable());
 
-            //Execute the query and get the sp result set.
-            //Although, I am not using this result set, but it shows how to get it
-            GstUsrInfoDbDto result_set = _query.FirstOrDefault();
+        //Execute the query and get the sp result set.
+        //Although, I am not using this result set, but it shows how to get it
+        GstUsrInfoDbDto result_set = _query.FirstOrDefault();
 
-            //Check the return code
-            int retCode = (int)retValue.Value;
-            if (retCode != 0) throw new Exception("supusr.spDeleteAll return code error");
+        //Check the return code
+        int retCode = (int)retValue.Value;
+        if (retCode != 0) throw new Exception("supusr.spDeleteAll return code error");
 
-            return await InfoAsync();
+        return await InfoAsync();
     }
 
-        public async Task<UserDto> SeedUsersAsync(int nrOfUsers, int nrOfSuperUsers, int nrOfSysAdmin)
+    public async Task<UserDto> SeedUsersAsync(int nrOfUsers, int nrOfSuperUsers, int nrOfSysAdmin)
     {
-            _logger.LogInformation($"Seeding {nrOfUsers} users and {nrOfSuperUsers} superusers");
-            
-            //First delete all existing users
-            foreach (var u in _dbContext.Users)
-                _dbContext.Users.Remove(u);
+        _logger.LogInformation($"Seeding {nrOfUsers} users and {nrOfSuperUsers} superusers");
+        
+        //First delete all existing users
+        foreach (var u in _dbContext.Users)
+            _dbContext.Users.Remove(u);
 
-            //add users
-            for (int i = 1; i <= nrOfUsers; i++)
+        //add users
+        for (int i = 1; i <= nrOfUsers; i++)
+        {
+            _dbContext.Users.Add(new UserDbM
             {
-                _dbContext.Users.Add(new UserDbM
-                {
-                    UserId = Guid.NewGuid(),
-                    UserName = $"user{i}",
-                    Email = $"user{i}@gmail.com",
-                    Password = _encryptions.EncryptPasswordToBase64($"user{i}"),
-                    Role = "usr"
-                });
-            }
+                UserId = Guid.NewGuid(),
+                UserName = $"user{i}",
+                Email = $"user{i}@gmail.com",
+                Password = _encryptions.EncryptPasswordToBase64($"user{i}"),
+                Role = "usr"
+            });
+        }
 
-            //add super user
-            for (int i = 1; i <= nrOfSuperUsers; i++)
+        //add super user
+        for (int i = 1; i <= nrOfSuperUsers; i++)
+        {
+            _dbContext.Users.Add(new UserDbM
             {
-                _dbContext.Users.Add(new UserDbM
-                {
-                    UserId = Guid.NewGuid(),
-                    UserName = $"superuser{i}",
-                    Email = $"superuser{i}@gmail.com",
-                    Password = _encryptions.EncryptPasswordToBase64($"superuser{i}"),
-                    Role = "supusr"
-                });
-            }
+                UserId = Guid.NewGuid(),
+                UserName = $"superuser{i}",
+                Email = $"superuser{i}@gmail.com",
+                Password = _encryptions.EncryptPasswordToBase64($"superuser{i}"),
+                Role = "supusr"
+            });
+        }
 
-            //add system adminitrators
-            for (int i = 1; i <= nrOfSysAdmin; i++)
+        //add system adminitrators
+        for (int i = 1; i <= nrOfSysAdmin; i++)
+        {
+            _dbContext.Users.Add(new UserDbM
             {
-                _dbContext.Users.Add(new UserDbM
-                {
-                    UserId = Guid.NewGuid(),
-                    UserName = $"sysadmin{i}",
-                    Email = $"sysadmin{i}@gmail.com",
-                    Password = _encryptions.EncryptPasswordToBase64($"sysadmin{i}"),
-                    Role = "sysadmin"
-                });
-            }
-            await _dbContext.SaveChangesAsync();
+                UserId = Guid.NewGuid(),
+                UserName = $"sysadmin{i}",
+                Email = $"sysadmin{i}@gmail.com",
+                Password = _encryptions.EncryptPasswordToBase64($"sysadmin{i}"),
+                Role = "sysadmin"
+            });
+        }
+        await _dbContext.SaveChangesAsync();
 
-            var _info = new UserDto
-            {
-                NrUsers = await _dbContext.Users.CountAsync(i => i.Role == "usr"),
-                NrSuperUsers = await _dbContext.Users.CountAsync(i => i.Role == "supusr"),
-                NrSystemAdmin = await _dbContext.Users.CountAsync(i => i.Role == "sysadmin")
-            };
+        var _info = new UserDto
+        {
+            NrUsers = await _dbContext.Users.CountAsync(i => i.Role == "usr"),
+            NrSuperUsers = await _dbContext.Users.CountAsync(i => i.Role == "supusr"),
+            NrSystemAdmin = await _dbContext.Users.CountAsync(i => i.Role == "sysadmin")
+        };
 
-            return _info;
+        return _info;
     }
 }
