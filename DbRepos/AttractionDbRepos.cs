@@ -147,6 +147,9 @@ public class AttractionDbRepos
         //Update individual properties
         item.UpdateFromDTO(itemDto);
 
+        //Update navigation properties
+        await navProp_Itemdto_to_ItemDbM(itemDto, item);
+        
         //write to database model
         _dbContext.Attractions.Update(item);
 
@@ -166,6 +169,9 @@ public class AttractionDbRepos
         //Update individual properties Zoo
         var item = new AttractionDbM(itemDto);
 
+        //Update navigation properties
+        await navProp_Itemdto_to_ItemDbM(itemDto, item);
+
         //write to database model
         _dbContext.Attractions.Add(item);
 
@@ -176,5 +182,35 @@ public class AttractionDbRepos
         return await ReadItemAsync(item.AttractionId, false);
     }
 
+    //from all Guid relationships in _itemDtoSrc finds the corresponding object in the database and assigns it to _itemDst 
+    //as navigation properties. Error is thrown if no object is found corresponing to an id.
+    private async Task navProp_Itemdto_to_ItemDbM(AttractionCuDto itemDtoSrc, AttractionDbM itemDst)
+    {
+        //update CommentsDbM from list
+        List<CommentDbM> comments = null;
+        if (itemDtoSrc.CommentIds != null)
+        {
+            comments = new List<CommentDbM>();
+            foreach (var id in itemDtoSrc.CommentIds)
+            {
+                var p = await _dbContext.Comments.FirstOrDefaultAsync(i => i.CommentId == id);
+                if (p == null)
+                    throw new ArgumentException($"Item id {id} not existing");
+
+                
+                comments.Add(p);
+            }
+        }
+        itemDst.CommentsDbM = comments;
+
+        //update address nav props
+        var address = await _dbContext.Addresses.FirstOrDefaultAsync(
+            a => (a.AddressId == itemDtoSrc.AddressId));
+
+        if (address == null)
+            throw new ArgumentException($"Item id {itemDtoSrc.AddressId} not existing");
+
+        itemDst.AddressDbM = address;
+    }
 
 }
