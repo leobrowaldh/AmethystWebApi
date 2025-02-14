@@ -81,7 +81,8 @@ public class AttractionDbRepos
                         (a.strCategory.ToLower().Contains(filter) ||
                          a.Name.ToLower().Contains(filter) ||
                          a.Description.ToLower().Contains(filter) ||
-                         a.AddressDbM.strCity.ToLower().Contains(filter)))
+                         a.AddressDbM.strCity.ToLower().Contains(filter) ||
+                         a.AddressDbM.strCountry.ToLower().Contains(filter)))
             .CountAsync(),
 
             PageItems = await query
@@ -91,7 +92,8 @@ public class AttractionDbRepos
                         (a.strCategory.ToLower().Contains(filter) ||
                          a.Name.ToLower().Contains(filter) ||
                          a.Description.ToLower().Contains(filter) ||
-                         a.AddressDbM.strCity.ToLower().Contains(filter)))
+                         a.AddressDbM.strCity.ToLower().Contains(filter) ||
+                         a.AddressDbM.strCountry.ToLower().Contains(filter)))
 
             //Adding paging
             .Skip(pageNumber * pageSize)
