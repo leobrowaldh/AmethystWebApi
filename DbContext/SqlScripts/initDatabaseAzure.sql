@@ -13,9 +13,33 @@ GO
 --02-create-gstusr-view.sql
 --create a view that gives overview of the database content
 CREATE OR ALTER VIEW gstusr.vwInfoDb AS
-    SELECT COUNT(*) as NrGroups FROM supusr.Attractions;
+    SELECT 'Guest user database overview' as Title,
+    (SELECT COUNT(*) FROM supusr.Attractions WHERE Seeded = 1) as nrSeededAttractions, 
+    (SELECT COUNT(*) FROM supusr.Attractions WHERE Seeded = 0) as nrUnseededAttractions,
+    (SELECT COUNT(*) FROM supusr.Comments WHERE Seeded = 1) as nrSeededComments, 
+    (SELECT COUNT(*) FROM supusr.Comments WHERE Seeded = 0) as nrUnseededComments,
+    (SELECT COUNT(*) FROM supusr.Addresses WHERE Seeded = 1) as nrSeededAddresses, 
+    (SELECT COUNT(*) FROM supusr.Addresses WHERE Seeded = 0) as nrUnseededAddresses,
+    (SELECT COUNT(*) FROM supusr.Banks WHERE Seeded = 1) as nrSeededBanks, 
+    (SELECT COUNT(*) FROM supusr.Banks WHERE Seeded = 0) as nrUnseededBanks
 GO
 
+CREATE OR ALTER VIEW gstusr.vwInfoAttractions AS
+    SELECT a.strCategory, COUNT(*) as NrAttractions  FROM supusr.Attractions a
+    GROUP BY a.strCategory WITH ROLLUP;
+GO
+
+CREATE OR ALTER VIEW gstusr.vwInfoComments AS
+    SELECT a.strCategory as AttractionCategory, a.Name as AttractionName, COUNT(c.CommentId) as NrComments FROM supusr.Attractions a
+    INNER JOIN supusr.Comments c ON c.AttractionDbMAttractionId = a.AttractionId
+    GROUP BY a.strCategory, a.Name WITH ROLLUP;
+GO
+
+CREATE OR ALTER VIEW gstusr.vwInfoAddresses AS
+    SELECT ad.strCity as CityName, COUNT(a.AttractionId) as NrAttractions FROM supusr.Attractions a
+    INNER JOIN supusr.Addresses ad ON a.AddressDbMAddressId = ad.AddressId
+    GROUP BY ad.strCity WITH ROLLUP;
+GO
 
 --03-create-supusr-sp.sql
 CREATE OR ALTER PROC supusr.spDeleteAll
@@ -26,7 +50,10 @@ CREATE OR ALTER PROC supusr.spDeleteAll
     SET NOCOUNT ON;
 
     -- will delete here
-    DELETE FROM supusr.Attractions;
+    DELETE FROM supusr.Attractions WHERE Seeded = @Seeded;
+    DELETE FROM supusr.Comments WHERE Seeded = @Seeded;
+    DELETE FROM supusr.Addresses WHERE Seeded = @Seeded;
+    DELETE FROM supusr.Banks WHERE Seeded = @Seeded;
     -- return new data status
     SELECT * FROM gstusr.vwInfoDb;
 
