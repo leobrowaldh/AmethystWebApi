@@ -153,7 +153,7 @@ namespace AppWebApi.Controllers
         [HttpGet()]
         [ProducesResponseType(200, Type = typeof(ResponsePageDto<IAttraction>))]
         [ProducesResponseType(400, Type = typeof(string))]
-        public async Task<IActionResult> ReadAttractionWithCC(string hasBank = "true", string pageNr = "0", string pageSize = "10")
+        public async Task<IActionResult> ReadAttractionWithBank(string hasBank = "true", string pageNr = "0", string pageSize = "10")
         {
             try
             {
@@ -161,7 +161,7 @@ namespace AppWebApi.Controllers
                 int pageNrArg = int.Parse(pageNr);
                 int pageSizeArg = int.Parse(pageSize);
 
-                _logger.LogInformation($"{nameof(ReadAttractionWithCC)}: {nameof(hasBankArg)}: {hasBankArg}, " +
+                _logger.LogInformation($"{nameof(ReadAttractionWithBank)}: {nameof(hasBankArg)}: {hasBankArg}, " +
                     $"{nameof(pageNrArg)}: {pageNrArg}, {nameof(pageSizeArg)}: {pageSizeArg}");
                 
                 var resp = await _service.ReadAttractionsWithCCAsync(hasBankArg, pageNrArg, pageSizeArg);     
@@ -169,7 +169,7 @@ namespace AppWebApi.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError($"{nameof(ReadAttractionWithCC)}: {ex.Message}.{ex.InnerException?.Message}");
+                _logger.LogError($"{nameof(ReadAttractionWithBank)}: {ex.Message}.{ex.InnerException?.Message}");
                 return BadRequest($"{ex.Message}.{ex.InnerException?.Message}");
             }
         }
@@ -178,13 +178,13 @@ namespace AppWebApi.Controllers
         [HttpGet()]
         [ProducesResponseType(200, Type = typeof(ResponseItemDto<IBank>))]
         [ProducesResponseType(400, Type = typeof(string))]
-        [ProducesResponseType(404, Type = typeof(string))]        public async Task<IActionResult> ReadClearCC(string id = null)
+        [ProducesResponseType(404, Type = typeof(string))]        public async Task<IActionResult> ReadClearBank(string id = null)
         {
             try
             {
                 var idArg = Guid.Parse(id);
 
-                _logger.LogInformation($"{nameof(ReadClearCC)}: {nameof(idArg)}: {idArg}");
+                _logger.LogInformation($"{nameof(ReadClearBank)}: {nameof(idArg)}: {idArg}");
                 
                 var item = await _service.ReadDecryptedCCAsync(idArg);
                 if (item?.Item == null) throw new ArgumentException ($"Item with id {id} does not exist");
@@ -193,7 +193,7 @@ namespace AppWebApi.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError($"{nameof(ReadClearCC)}: {ex.Message}.{ex.InnerException?.Message}");
+                _logger.LogError($"{nameof(ReadClearBank)}: {ex.Message}.{ex.InnerException?.Message}");
                 return BadRequest($"{ex.Message}.{ex.InnerException?.Message}");
             }
         }
