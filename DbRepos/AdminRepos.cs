@@ -69,7 +69,7 @@ public class AdminDbRepos
         foreach (var attraction in attractions)
         {
             attraction.AddressDbM = new AddressDbM().Seed(rnd);
-            attraction.CommentsDbM = rnd.ItemsToList<CommentDbM>(rnd.Next(0,4));
+            attraction.CommentsDbM = rnd.ItemsToList<CommentDbM>(rnd.Next(0,21));
         }
         _dbContext.Attractions.AddRange(attractions);
         await _dbContext.SaveChangesAsync();
