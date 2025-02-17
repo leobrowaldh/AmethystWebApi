@@ -1,4 +1,4 @@
 {
-    "appService.defaultWebAppToDeploy": "",
-    "appService.deploySubpath": "AppWebApi/publish"
+    "appService.defaultWebAppToDeploy": "/subscriptions/9e5c45f4-6260-40f7-af50-35bb963049cb/resourceGroups/SYS6-Amethyst-6755B002D1BB/providers/Microsoft.Web/sites/SYS6-Amethyst-ws-proj",
+    "appService.deploySubpath": "AppWebApi\\publish"
 }
