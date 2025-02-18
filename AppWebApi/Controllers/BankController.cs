@@ -76,10 +76,9 @@ namespace AppWebApi.Controllers
                 return BadRequest($"{ex.Message}.{ex.InnerException?.Message}");
             }
         }
-
+        [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
+        Policy = null, Roles = " sysadmin")]
         [HttpDelete("{id}")]
-        [ProducesResponseType(200, Type = typeof(ResponseItemDto<IBank>))]
-        [ProducesResponseType(400, Type = typeof(string))]
         public async Task<IActionResult> DeleteItem(string id)
         {
             try
