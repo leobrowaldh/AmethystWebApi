@@ -9,10 +9,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AppWebApi.Controllers;
-  [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
-        Policy = null, Roles = "usr, supusr, sysadmin")]
-    [ApiController]
-    [Route("api/[controller]/[action]")]
+[Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
+    Policy = null, Roles = "usr, supusr, sysadmin")]
+[ApiController]
+[Route("api/[controller]/[action]")]
 public class AddressController : ControllerBase
 {
     private readonly IAttractionService _attractionService;

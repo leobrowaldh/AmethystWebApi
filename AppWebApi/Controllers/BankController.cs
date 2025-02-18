@@ -79,7 +79,7 @@ namespace AppWebApi.Controllers
 
 
         [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
-        Policy = null, Roles = " sysadmin")]
+        Policy = null, Roles = "sysadmin")]
         [HttpDelete("{id}")]
         [ProducesResponseType(200, Type = typeof(ResponseItemDto<IBank>))]
         [ProducesResponseType(400, Type = typeof(string))]
