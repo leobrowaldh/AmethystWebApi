@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Azure;
 
 namespace Models.DTO;
 
@@ -23,3 +24,8 @@ public class ResponseItemDto<T>
     public string DbConnectionKeyUsed {get; init;}
 }
 
+public class RobustResponseItemDto
+{
+    public UserDto UserResponse { get; init; }
+    public ResponseItemDto<GstUsrInfoAllDto> DbSeedingResponse { get; init; }
+}

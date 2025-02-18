@@ -67,31 +67,31 @@ public class AddressController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
-    [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
-        Policy = null, Roles = "supusr, sysadmin")]
-    [HttpDelete("{id}")]
-    [ProducesResponseType(200, Type = typeof(ResponseItemDto<IAddress>))]
-    [ProducesResponseType(400, Type = typeof(string))]
-    public async Task<IActionResult> DeleteItem(string id)
-    {
-        try
-        {
-            var idArg = Guid.Parse(id);
+    // [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
+    //     Policy = null, Roles = "sysadmin")]
+    // [HttpDelete("{id}")]
+    // [ProducesResponseType(200, Type = typeof(ResponseItemDto<IAddress>))]
+    // [ProducesResponseType(400, Type = typeof(string))]
+    // public async Task<IActionResult> DeleteItem(string id)
+    // {
+    //     try
+    //     {
+    //         var idArg = Guid.Parse(id);
 
-            _logger.LogInformation($"{nameof(DeleteItem)}: {nameof(idArg)}: {idArg}");
+    //         _logger.LogInformation($"{nameof(DeleteItem)}: {nameof(idArg)}: {idArg}");
             
-            var item = await _attractionService.DeleteAddressAsync(idArg);
-            if (item?.Item == null) throw new ArgumentException($"Item with id {id} does not exist");
+    //         var item = await _attractionService.DeleteAddressAsync(idArg);
+    //         if (item?.Item == null) throw new ArgumentException($"Item with id {id} does not exist");
     
-            _logger.LogInformation($"item {idArg} deleted");
-            return Ok(item);                
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError($"{nameof(DeleteItem)}: {ex.Message}");
-            return BadRequest(ex.Message);
-        }
-    }
+    //         _logger.LogInformation($"item {idArg} deleted");
+    //         return Ok(item);                
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         _logger.LogError($"{nameof(DeleteItem)}: {ex.InnerException?.Message}");
+    //         return BadRequest(ex.Message);
+    //     }
+    // }
 
     [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
         Policy = null, Roles = "supusr, sysadmin")]

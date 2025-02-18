@@ -115,6 +115,36 @@ namespace AppWebApi.Controllers
                 return BadRequest($"{ex.Message}.{ex.InnerException?.Message}");
             }       
         }
+
+        [HttpPost()]
+        [ProducesResponseType(200, Type = typeof(UserDto))]
+        [ProducesResponseType(400, Type = typeof(string))]
+        public async Task<IActionResult> RobustSeeding()
+        {
+            try
+            {
+
+                _logger.LogInformation("Seeding users: users: 50, superusers: 20, sysadmin: 5");
+
+                UserDto _info = await _adminService.SeedUsersAsync(50, 20, 5);
+
+                _logger.LogInformation("Seeding database: 1000 attractions, 0-20 comments each");
+                var info = await _adminService.SeedAsync(1000);
+
+                RobustResponseItemDto response = new RobustResponseItemDto
+                {
+                    UserResponse = _info,
+                    DbSeedingResponse = info
+                };
+
+                return Ok(response);
+                        
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}.{ex.InnerException?.Message}");
+            }       
+        }
 #endif
         [HttpGet()]
         [ProducesResponseType(200, Type = typeof(IEnumerable<LogMessage>))]

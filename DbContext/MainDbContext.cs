@@ -165,6 +165,16 @@ public class MainDbContext : Microsoft.EntityFrameworkCore.DbContext
 
             base.OnConfiguring(optionsBuilder);
         }
+        //Trying to fix the failing deleteaddress method:
+        // protected override void OnModelCreating(ModelBuilder modelBuilder)
+        // {
+        //     modelBuilder.Entity<Attraction>()
+        //         .HasOne(a => a.Address)
+        //         .WithMany() // many attractions can have the same address
+        //         .IsRequired(false) // This makes the foreign key nullable
+        //         .OnDelete(DeleteBehavior.SetNull); // This sets the foreign key to null when the parent is deleted
+
+        // }
     }
     #endregion
 
