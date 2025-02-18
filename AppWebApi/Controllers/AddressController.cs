@@ -46,7 +46,7 @@ public class AddressController : ControllerBase
     }
 
     [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
-        Policy = null, Roles = "supusr, sysadmin")]
+        Policy = null, Roles = "usr,supusr, sysadmin")]
     [HttpPut("{id}")]
     [ProducesResponseType(200, Type = typeof(ResponseItemDto<IAddress>))]
     [ProducesResponseType(400, Type = typeof(string))]
