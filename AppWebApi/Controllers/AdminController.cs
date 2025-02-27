@@ -48,7 +48,6 @@ namespace AppWebApi.Controllers
             }
          }
 
-#if DEBUG
         [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
             Policy = null, Roles = "sysadmin")]
 
@@ -145,7 +144,7 @@ namespace AppWebApi.Controllers
                 return BadRequest($"{ex.Message}.{ex.InnerException?.Message}");
             }       
         }
-#endif
+
         [HttpGet()]
         [ProducesResponseType(200, Type = typeof(IEnumerable<LogMessage>))]
         public async Task<IActionResult> Log([FromServices] ILoggerProvider _loggerProvider)
