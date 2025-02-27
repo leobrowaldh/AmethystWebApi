@@ -165,7 +165,6 @@ public class MainDbContext : Microsoft.EntityFrameworkCore.DbContext
 
             base.OnConfiguring(optionsBuilder);
         }
-        //Trying to fix the failing deleteaddress method:
         // protected override void OnModelCreating(ModelBuilder modelBuilder)
         // {
         //     modelBuilder.Entity<Attraction>()
